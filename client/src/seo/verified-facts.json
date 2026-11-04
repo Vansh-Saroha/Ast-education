@@ -1,0 +1,9 @@
+{
+  "snapshotDate": "2026-11-03",
+  "phone": { "label": "Main contact number", "value": "+91 89794 87215", "source": "owner-confirmed" },
+  "whatsapp": { "label": "WhatsApp number", "value": "+91 96907 66514", "source": "owner-confirmed" },
+  "address": { "label": "Address", "value": "244/A, Purvi Deen Dayal, Opposite Canara Bank, DAV Inter College Road, Roorkee, Haridwar, Uttarakhand 247667", "source": "owner-confirmed" },
+  "established": { "label": "Business established", "value": "5 December 2023", "source": "owner-confirmed" },
+  "udyamNumber": { "label": "Udyam registration number", "value": "UDYAM-UK-06-0037585", "source": "owner-confirmed" },
+  "parentOrganisation": { "label": "Parent organisation", "value": "SUMAN EDUCATIONAL TRUST", "source": "owner-confirmed" }
+}

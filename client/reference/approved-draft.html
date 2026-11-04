@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AST Education, Roorkee | Coaching & Technical Education</title>
+<meta name="description" content="AST Education (ALL STUDIES & TECHNICAL EDUCATION), Roorkee: school coaching, computer courses, technical and personality development.">
+<meta property="og:title" content="AST Education, Roorkee">
+<meta property="og:description" content="Coaching, computer and technical education in Roorkee, Uttarakhand.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Hind:wght@400;500;600;700&display=swap">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"AST Education","alternateName":"ALL STUDIES & TECHNICAL EDUCATION","telephone":"+918979487215","parentOrganization":{"@type":"Organization","name":"SUMAN EDUCATIONAL TRUST"},"address":{"@type":"PostalAddress","streetAddress":"244/A, Purvi Deen Dayal, Opposite Canara Bank, DAV Inter College Road","addressLocality":"Roorkee","addressRegion":"Uttarakhand","postalCode":"247667","addressCountry":"IN"}}</script>
+<style>
+:root{--navy:#082B50;--orange:#F26A21;--yellow:#F4B928;--ink:#1C2633;--muted:#4A5565;--line:#DDE3EC;--tint:#F4F7FB;--err:#B42318}
+*{box-sizing:border-box}
+html{scroll-padding-top:96px}
+body{margin:0;font:400 1.0625rem/1.65 Hind,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#fff}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;color:var(--navy);line-height:1.2;margin:0 0 .5rem}
+h1{font-size:clamp(2rem,4.5vw,2.8rem)}h2{font-size:1.5rem}h3{font-size:1.2rem}
+p{margin:0 0 .9rem}
+a{color:var(--navy);font-weight:500}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:4px}
+[tabindex="-1"]:focus{outline:none}
+.skip{position:absolute;left:-999px}.skip:focus{left:12px;top:12px;background:#fff;padding:8px 12px;z-index:20}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.sec{padding:48px 20px}
+.narrow{max-width:680px}
+header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.brand img{display:block;height:58px;width:auto}
+nav ul{display:flex;gap:6px 18px;list-style:none;margin:0;padding:0;flex-wrap:wrap;align-items:center}
+nav a{text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+nav a[aria-current]{border-color:var(--orange)}
+.menu-btn{display:none}
+@media(max-width:900px){
+.menu-btn{display:inline-flex;align-items:center;min-height:44px;font:600 1rem Hind,sans-serif;color:var(--navy);background:#fff;border:2px solid var(--navy);border-radius:999px;padding:0 18px;cursor:pointer}
+nav{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--line);padding:8px 20px 16px}
+header.open nav{display:block}
+nav ul{flex-direction:column;align-items:flex-start;gap:0}
+nav a{display:block;padding:10px 0;min-height:44px}
+}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:999px;border:2px solid transparent;font:600 1rem/1 Hind,sans-serif;text-decoration:none;cursor:pointer}
+.btn-o{background:var(--orange);color:var(--navy)}
+.btn-n{background:var(--navy);color:#fff}
+.btn-g{background:#fff;color:var(--navy);border-color:var(--navy)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:56px 20px 40px}
+.hero img{width:100%;max-width:340px;justify-self:center;height:auto}
+.lead{font-size:1.2rem;color:var(--muted);max-width:38ch}
+.row{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.band{background:var(--tint)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;color:inherit;text-decoration:none;display:block}
+a.card:hover{border-color:var(--navy)}
+.tag{display:inline-block;font-size:.88rem;font-weight:600;color:var(--navy);background:var(--tint);border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin:0 0 10px}
+.note{border-left:4px solid var(--yellow);background:#FFF8E6;padding:10px 14px;border-radius:8px;font-size:.95rem}
+.ph{color:var(--muted);font-style:italic}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.trust div{border-top:3px solid var(--orange);padding-top:10px;color:var(--muted);font-size:.95rem}
+.trust strong{display:block;color:var(--navy);font-size:1.05rem}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px}
+.chip{font:500 .95rem Hind,sans-serif;color:var(--navy);background:#fff;border:1px solid var(--navy);border-radius:999px;padding:8px 14px;min-height:40px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--navy);color:#fff}
+input,select,textarea{font:inherit;width:100%;padding:12px 14px;border:1px solid #8D99A9;border-radius:8px;background:#fff;color:var(--ink)}
+[aria-invalid="true"]{border:2px solid var(--err)!important}
+label{display:block;font-weight:600;margin:14px 0 6px;color:var(--navy)}
+.err{color:var(--err);font-size:.92rem;margin-top:4px}
+.hint{color:var(--muted);font-size:.92rem;margin:4px 0 0}
+.cols{display:grid;gap:16px}
+@media(min-width:760px){.cols{grid-template-columns:1fr 1fr}.hero{padding-top:72px}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:18px}
+.check input{width:20px;height:20px;margin-top:5px;flex:none}
+.check label{font-weight:400;margin:0;color:var(--ink)}
+footer{background:var(--navy);color:#fff;padding:44px 20px 28px}
+footer a{color:#fff}
+footer p{color:#E6ECF4;font-size:.95rem}
+.fg{max-width:1120px;margin:0 auto;display:grid;gap:28px}
+@media(min-width:760px){.fg{grid-template-columns:2fr 1fr 1fr}}
+.social{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 0}
+dialog{border:0;border-radius:12px;padding:0;width:min(760px,94vw);max-height:90vh;color:var(--ink)}
+dialog::backdrop{background:rgba(8,43,80,.7)}
+.dlg{padding:24px}
+.x{float:right;background:none;border:0;font:inherit;font-size:1.8rem;line-height:1;color:var(--navy);cursor:pointer;min-width:44px;min-height:44px}
+.lb{overflow:auto;max-height:72vh;background:var(--tint)}
+.lb img{display:block;width:100%;height:auto}
+.zoomed img{width:170%;max-width:none}
+.thumb{background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:10px;cursor:zoom-in;width:100%;font:inherit}
+.thumb img{width:100%;height:auto;display:block;border-radius:6px}
+.profile{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:760px){.profile{grid-template-columns:300px 1fr}}
+.profile img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+dl{margin:8px 0 0}dt{font-weight:600;color:var(--navy);margin-top:12px}dd{margin:2px 0 0;color:var(--muted)}
+.empty{text-align:center;padding:40px 16px;border:1px dashed #8D99A9;border-radius:12px;color:var(--muted)}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+<div class="wrap bar">
+<a class="brand" href="#home" aria-label="AST Education home"><img data-a="logo" alt="AST Education logo" width="58" height="58"></a>
+<button class="menu-btn" id="mb" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav id="nav" aria-label="Main"><ul>
+<li><a href="#courses">Courses</a></li>
+<li><a href="#leadership">Leadership</a></li>
+<li><a href="#certifications">Certifications</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#testimonials">Testimonials</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a class="btn btn-o" href="#enquiry">Admission enquiry</a></li>
+</ul></nav>
+</div>
+</header>
+
+<main id="main">
+
+<section data-view="home" aria-labelledby="h-home">
+<div class="wrap hero">
+<div>
+<p class="tag">Roorkee, Uttarakhand</p>
+<h1 id="h-home">Building Knowledge, Empowering Futures.</h1>
+<p class="lead">Discover quality education, technical skills and professional development with AST Education, Roorkee.</p>
+<p>School coaching, computer courses, technical skill development and personality development, all from one institute.</p>
+<div class="row"><a class="btn btn-o" href="#courses">Explore Our Courses</a><a class="btn btn-g" href="#enquiry">Enquire Now</a></div>
+<div class="row"><a class="btn btn-n" href="tel:+918979487215">Call +91 89794 87215</a><a class="btn btn-g" href="https://wa.me/919690766514?text=Hello%20AST%20Education%2C%20I%20would%20like%20to%20enquire%20about%20admission." target="_blank" rel="noopener noreferrer">WhatsApp us</a></div>
+</div>
+<img data-a="logo" alt="AST Education logo: open book, rising sun and protective hands" width="340" height="340">
+</div>
+<div class="band"><div class="sec">
+<div class="trust">
+<div><strong>Established 2023</strong>Business established on 5 December 2023.</div>
+<div><strong>Udyam registered</strong>Micro enterprise registration dated 27 December 2023.</div>
+<div><strong>Five course areas</strong>School, higher education coaching, computer, technical and personality development.</div>
+<div><strong>Roorkee, Uttarakhand</strong>Located at PIN code 247667.</div>
+</div>
+</div></div>
+<div class="wrap sec">
+<h2>What we offer</h2>
+<div class="grid">
+<a class="card" href="#courses"><h3>School Education</h3><p>LKG to Class 12, academic coaching and subject-wise support.</p></a>
+<a class="card" href="#courses"><h3>Higher Education Coaching</h3><p>B.A., B.Com and B.Tech coaching and academic support. We do not award university degrees.</p></a>
+<a class="card" href="#courses"><h3>Computer Education</h3><p>Basic Computer, DCA, ADCA, CCC, Tally, MS Office and Advanced Excel.</p></a>
+<a class="card" href="#courses"><h3>Programming & Technical</h3><p>Coding classes, programming education and technical skill development.</p></a>
+<a class="card" href="#courses"><h3>Personality Development</h3><p>English speaking, communication skills, motivation and personality development.</p></a>
+</div>
+</div>
+<div class="band"><div class="wrap sec">
+<h2>Why choose AST Education</h2>
+<div class="grid">
+<div class="card"><h3>One institute, many goals</h3><p>Academic support, computer skills and personality development are offered together.</p></div>
+<div class="card"><h3>Clear information first</h3><p>Course fees and detailed information are shared when you enquire.</p></div>
+<div class="card"><h3>Registrations shown openly</h3><p>Our Udyam registration and the parent organisation’s ISO certificate are shown on the Certifications page.</p></div>
+</div>
+</div></div>
+<div class="wrap sec">
+<div class="grid">
+<a class="card" href="#leadership"><h3>Our Leadership</h3><p>Meet the Director and the Education Manager.</p></a>
+<a class="card" href="#certifications"><h3>Certifications & Registrations</h3><p>Udyam registration, and ISO 9001:2015 held by SUMAN EDUCATIONAL TRUST.</p></a>
+<a class="card" href="#testimonials"><h3>Student Testimonials</h3><p class="ph">Student experiences will be published after receiving verified consent.</p></a>
+</div>
+</div>
+</section>
+
+<section data-view="courses" class="wrap sec" aria-labelledby="h-courses">
+<h1 id="h-courses" tabindex="-1">Courses & Programs</h1>
+<p>Contact us for course fees and detailed information.</p>
+<label for="q">Search by course name</label>
+<input id="q" type="search" autocomplete="off" placeholder="For example: DCA, Tally, Coding">
+<div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+<p class="hint" id="count" aria-live="polite"></p>
+<div class="grid" id="grid"></div>
+<div class="empty" id="empty" hidden>No courses match your search. Try another keyword or choose All courses.</div>
+<dialog id="cd" aria-labelledby="cdt">
+<div class="dlg">
+<button class="x" type="button" data-close aria-label="Close course details">×</button>
+<p class="tag" id="cdc"></p>
+<h2 id="cdt"></h2>
+<p class="ph">Detailed course information will be updated by the institute.</p>
+<p>Contact us for course fees and detailed information.</p>
+<div class="row"><button class="btn btn-o" id="cde" type="button">Enquire about this course</button></div>
+</div>
+</dialog>
+</section>
+
+<section data-view="leadership" class="wrap sec" aria-labelledby="h-lead">
+<h1 id="h-lead" tabindex="-1">Our Leadership</h1>
+<p>Profiles are shown as placeholders until the institute supplies verified details.</p>
+<article class="card profile" aria-labelledby="p-dir">
+<img data-a="dir" alt="Professional portrait of the Director, seated at a desk with a laptop">
+<div>
+<span class="tag">Director / Owner</span>
+<h2 id="p-dir">[Name to be supplied]</h2>
+<p class="note">Placeholder. Verified name, qualifications and biography have not been supplied yet.</p>
+<dl>
+<dt>Educational qualifications</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Professional experience</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Biography and achievements</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Vision and mission</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Message for students</dt><dd class="ph">To be supplied by the institute.</dd>
+</dl>
+</div>
+</article>
+<article class="card profile" aria-labelledby="p-mgr" style="margin-top:20px">
+<img data-a="mgr" alt="Professional portrait of the Education Manager, seated at a desk with a laptop and a Manager nameplate">
+<div>
+<span class="tag">Education Manager</span>
+<h2 id="p-mgr">[Name to be supplied]</h2>
+<p class="note">Placeholder. Verified name, qualifications and biography have not been supplied yet.</p>
+<dl>
+<dt>Educational qualifications</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Professional experience</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Responsibilities</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Skills and expertise</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Biography</dt><dd class="ph">To be supplied by the institute.</dd>
+<dt>Message for students</dt><dd class="ph">To be supplied by the institute.</dd>
+</dl>
+</div>
+</article>
+</section>
+
+<section data-view="certifications" class="wrap sec" aria-labelledby="h-cert">
+<h1 id="h-cert" tabindex="-1">Certifications & Registrations</h1>
+<p class="note">Udyam registration and ISO 9001:2015 are different things. Udyam is a government business registration for micro enterprises. ISO 9001:2015 is a quality management certificate issued to SUMAN EDUCATIONAL TRUST. Neither is an educational accreditation.</p>
+<div class="cols" style="margin-top:24px">
+<article class="card" aria-labelledby="c-udyam">
+<h2 id="c-udyam">Udyam Registration</h2>
+<dl>
+<dt>Enterprise name (as on certificate)</dt><dd>RKE ALLSTUDIES & TECHNICAL EDUCATION (AST EDUCATION)</dd>
+<dt>Registration number</dt><dd>UDYAM-UK-06-0037585</dd>
+<dt>Registration date</dt><dd>27/12/2023</dd>
+<dt>Enterprise type</dt><dd>Micro</dd>
+<dt>Major activity (as printed)</dt><dd>Trading</dd>
+</dl>
+<p class="note" style="margin-top:14px">Certificate scan: placeholder. It will be added after the institute confirms which details may be shown publicly.</p>
+</article>
+<article class="card" aria-labelledby="c-iso">
+<h2 id="c-iso">ISO 9001:2015</h2>
+<p class="note">This certificate is issued to SUMAN EDUCATIONAL TRUST, the parent organisation. It is not a separate certificate issued to AST Education.</p>
+<dl>
+<dt>Certificate issued to</dt><dd>SUMAN EDUCATIONAL TRUST</dd>
+<dt>Certification body</dt><dd>ICV Assessments Pvt. Ltd.</dd>
+<dt>Certificate number</dt><dd>IN/55611996/3245</dd>
+<dt>Issue date</dt><dd>17/02/2024</dd>
+<dt>Re-certification date</dt><dd>16/02/2027</dd>
+<dt>Scope</dt><dd>Arts and Commerce Education; Medical Education; Design and Animation; Personality Development; Hospitality; Short-Term Courses; Business and Investment; Journalism; Law; Computer Courses; Academic Education.</dd>
+</dl>
+<button class="thumb" id="iso-open" type="button" style="margin-top:14px" aria-label="View ISO 9001:2015 certificate in a zoomable viewer"><img data-a="iso" alt="ISO 9001:2015 certificate issued to SUMAN EDUCATIONAL TRUST by ICV Assessments Pvt. Ltd."></button>
+<p class="hint">Select the certificate to view it. Zoom is available in the viewer.</p>
+</article>
+</div>
+<dialog id="lb" aria-label="ISO 9001:2015 certificate viewer">
+<div class="dlg">
+<button class="x" type="button" data-close aria-label="Close certificate viewer">×</button>
+<p class="row" style="margin:0 0 12px"><button class="btn btn-g" id="zm" type="button" aria-pressed="false">Zoom in</button></p>
+<div class="lb" id="lbw"><img data-a="iso" alt="ISO 9001:2015 certificate issued to SUMAN EDUCATIONAL TRUST"></div>
+</div>
+</dialog>
+</section>
+
+<section data-view="about" class="wrap sec" aria-labelledby="h-about">
+<h1 id="h-about" tabindex="-1">About AST Education</h1>
+<p>AST Education is the working name of ALL STUDIES & TECHNICAL EDUCATION, a micro enterprise based in Roorkee, Uttarakhand.</p>
+<p>The business was established on 5 December 2023 and registered on Udyam on 27 December 2023. It is linked with SUMAN EDUCATIONAL TRUST as its parent organisation.</p>
+<h2>Educational services</h2>
+<p>School coaching, higher education coaching, computer education, technical skill development and personality development.</p>
+<h2>Coaching, academic support and degrees</h2>
+<p>AST Education provides coaching and academic support. It does not award university degrees. Degrees are awarded by the universities that conduct the relevant programmes.</p>
+<h2>Mission, vision and learning approach</h2>
+<p class="ph">To be written by the institute. Not yet supplied.</p>
+<h2>Institute photographs</h2>
+<p>Photographs will be published after the institute confirms permission.</p>
+</section>
+
+<section data-view="gallery" class="wrap sec" aria-labelledby="h-gal">
+<h1 id="h-gal" tabindex="-1">Gallery</h1>
+<p>Photographs of the institute will appear here once the institute confirms permission to publish them.</p>
+<div class="empty">No verified photographs are published yet. Categories: Institute Building, Classrooms, Computer Lab, Faculty, Students, Educational Activities and Events.</div>
+</section>
+
+<section data-view="testimonials" class="wrap sec" aria-labelledby="h-test">
+<h1 id="h-test" tabindex="-1">Student Testimonials</h1>
+<div class="empty">Student experiences will be published after receiving verified consent.</div>
+</section>
+
+<section data-view="contact" class="wrap sec" aria-labelledby="h-contact">
+<h1 id="h-contact" tabindex="-1">Contact Us</h1>
+<div class="cols">
+<div class="card">
+<h2>Visit</h2>
+<p>AST Education<br>244/A, Purvi Deen Dayal, Opposite Canara Bank, DAV Inter College Road, Roorkee, Haridwar, Uttarakhand 247667</p>
+<div class="row"><a class="btn btn-o" id="dir" href="#" target="_blank" rel="noopener noreferrer">Get directions</a><button class="btn btn-g" id="copy" type="button">Copy address</button></div>
+<p class="hint" id="cs" aria-live="polite"></p>
+<p class="hint">Directions open in Google Maps. Use the address above for text directions.</p>
+</div>
+<div class="card">
+<h2>Call or message</h2>
+<p><a href="tel:+918979487215">+91 89794 87215</a></p>
+<div class="row"><a class="btn btn-n" href="tel:+918979487215">Call now</a><a class="btn btn-g" href="https://wa.me/919690766514" target="_blank" rel="noopener noreferrer">WhatsApp</a></div>
+<h3 style="margin-top:20px">Working hours</h3>
+<p>Monday to Saturday, 7:00 AM to 7:00 PM</p>
+<h3 style="margin-top:20px">Social</h3>
+<div class="social">
+<a href="https://www.instagram.com/asteducation/" target="_blank" rel="noopener noreferrer" aria-label="AST Education on Instagram (opens in a new tab)">Instagram</a>
+<a href="https://www.facebook.com/share/1HffKZQ1Bc/" target="_blank" rel="noopener noreferrer" aria-label="AST Education on Facebook (opens in a new tab)">Facebook</a>
+<a href="https://youtube.com/@asteducation1411" target="_blank" rel="noopener noreferrer" aria-label="AST Education on YouTube (opens in a new tab)">YouTube</a>
+</div>
+</div>
+</div>
+<p style="margin-top:20px">Prefer to write? <a href="#enquiry">Send an admission enquiry</a>.</p>
+</section>
+
+<section data-view="enquiry" class="wrap sec" aria-labelledby="h-enq">
+<div class="narrow">
+<h1 id="h-enq" tabindex="-1">Admission Enquiry</h1>
+<p>Fill in the form. We open a WhatsApp message to AST Education with your details filled in, so you can review it before you send it. This website does not store your enquiry.</p>
+<form id="f" novalidate>
+<label for="name">Student name</label>
+<input id="name" name="name" autocomplete="name" maxlength="80" aria-describedby="e-name">
+<div class="err" id="e-name"></div>
+
+<label for="mobile">Mobile number</label>
+<input id="mobile" name="mobile" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="16" aria-describedby="h-mobile e-mobile">
+<p class="hint" id="h-mobile">10-digit Indian mobile number. +91 is optional.</p>
+<div class="err" id="e-mobile"></div>
+
+<label for="email">Email address (optional)</label>
+<input id="email" name="email" type="email" autocomplete="email" maxlength="120" aria-describedby="e-email">
+<div class="err" id="e-email"></div>
+
+<label for="qualification">Qualification</label>
+<select id="qualification" name="qualification" aria-describedby="e-qualification">
+<option value="">Select a qualification</option>
+<option>Class 10</option><option>Class 12</option><option>Undergraduate</option><option>Graduate</option><option>Postgraduate</option><option>Other</option>
+</select>
+<div class="err" id="e-qualification"></div>
+
+<label for="course">Interested course</label>
+<select id="course" name="course" aria-describedby="e-course"></select>
+<div class="err" id="e-course"></div>
+
+<label for="message">Message (optional)</label>
+<textarea id="message" name="message" rows="4" maxlength="500" aria-describedby="h-msg"></textarea>
+<p class="hint" id="h-msg">Up to 500 characters.</p>
+
+<div class="check">
+<input id="consent" name="consent" type="checkbox" aria-describedby="e-consent">
+<label for="consent">I agree that AST Education may contact me about this enquiry. I have read the <a href="#privacy">Privacy Policy</a>.</label>
+</div>
+<div class="err" id="e-consent"></div>
+
+<div class="hp" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+
+<div class="row"><button class="btn btn-o" id="sub" type="submit">Continue on WhatsApp</button></div>
+<p class="err" id="form-e" aria-live="polite"></p>
+</form>
+
+<div class="note" id="ok" tabindex="-1" hidden aria-live="polite">
+<p><strong>Your enquiry is ready in WhatsApp.</strong> Tap send in WhatsApp to start the conversation.</p>
+<p>If WhatsApp did not open, use this link: <a id="wal" href="#" target="_blank" rel="noopener noreferrer">Open WhatsApp with your enquiry</a>.</p>
+<p>Nothing is stored on this website. You can start a new enquiry in about 20 seconds.</p>
+<div class="row"><button class="btn btn-g" id="again" type="button">Start a new enquiry</button></div>
+</div>
+</div>
+</section>
+
+<section data-view="privacy" class="wrap sec" aria-labelledby="h-priv">
+<div class="narrow">
+<h1 id="h-priv" tabindex="-1">Privacy Policy</h1>
+<p>The enquiry form does not store your details on this website. The details you type are sent only when you choose to send the WhatsApp message.</p>
+<p>When you submit an enquiry, you agree that AST Education may contact you about it. You can withdraw consent at any time by telling us.</p>
+<p class="note">Placeholder: the full privacy notice, data retention period and privacy contact will be confirmed by the institute before publication.</p>
+<p>For privacy requests, call +91 89794 87215.</p>
+</div>
+</section>
+
+<section data-view="terms" class="wrap sec" aria-labelledby="h-terms">
+<div class="narrow">
+<h1 id="h-terms" tabindex="-1">Terms of Use</h1>
+<p>Information on this website describes AST Education for general information. Course fees and detailed information are shared when you enquire.</p>
+<p>AST Education provides coaching, academic support, computer and technical training, and personality development. It does not award university degrees.</p>
+<p class="note">Placeholder: full terms of use will be reviewed by the institute before publication.</p>
+</div>
+</section>
+
+<section data-view="notfound" class="wrap sec" aria-labelledby="h-404">
+<div class="narrow">
+<h1 id="h-404" tabindex="-1">Page not found</h1>
+<p>This page does not exist. Go back to the home page, or browse our courses.</p>
+<div class="row"><a class="btn btn-o" href="#home">Home</a><a class="btn btn-g" href="#courses">Browse courses</a></div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="fg">
+<div>
+<p><strong style="color:#fff;font-family:Fraunces,Georgia,serif;font-size:1.15rem">AST Education</strong><br>ALL STUDIES & TECHNICAL EDUCATION<br>244/A, Purvi Deen Dayal, Opposite Canara Bank, DAV Inter College Road, Roorkee, Haridwar, Uttarakhand 247667</p>
+<p>Parent organisation: SUMAN EDUCATIONAL TRUST</p>
+</div>
+<div>
+<p><a href="tel:+918979487215">+91 89794 87215</a><br>Monday to Saturday, 7:00 AM to 7:00 PM</p>
+<div class="social">
+<a href="https://www.instagram.com/asteducation/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (opens in a new tab)">Instagram</a>
+<a href="https://www.facebook.com/share/1HffKZQ1Bc/" target="_blank" rel="noopener noreferrer" aria-label="Facebook (opens in a new tab)">Facebook</a>
+<a href="https://youtube.com/@asteducation1411" target="_blank" rel="noopener noreferrer" aria-label="YouTube (opens in a new tab)">YouTube</a>
+</div>
+</div>
+<div>
+<p><a href="#privacy">Privacy Policy</a><br><a href="#terms">Terms of Use</a><br><a href="#enquiry">Admission Enquiry</a></p>
+<p>© 2026 AST Education. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script>
+const A={logo:"__LOGO__",dir:"__DIR__",mgr:"__MGR__",iso:"__ISO__"};
+document.querySelectorAll('[data-a]').forEach(i=>i.src=A[i.dataset.a]);
+const WA='919690766514';
+const ADDR='244/A, Purvi Deen Dayal, Opposite Canara Bank, DAV Inter College Road, Roorkee, Haridwar, Uttarakhand 247667';
+const LABEL=['School Education','Higher Education Coaching','Computer Education','Programming & Technical','Personality Development'];
+const C=[['LKG to Class 12',0],['Academic Coaching',0],['Subject-wise Academic Support',0],['B.A. Coaching',1],['B.Com Coaching',1],['B.Tech Coaching',1],['Basic Computer',2],['DCA',2],['ADCA',2],['CCC',2],['Tally',2],['MS Office',2],['Advanced Excel',2],['Coding Classes',3],['Programming Education',3],['Technical Skill Development',3],['English Speaking',4],['Communication Skills',4],['Motivation Classes',4],['Personality Development',4]];
+const T={home:'AST Education, Roorkee | Coaching & Technical Education',courses:'Courses & Programs',leadership:'Our Leadership',certifications:'Certifications & Registrations',about:'About Us',gallery:'Gallery',testimonials:'Student Testimonials',contact:'Contact Us',enquiry:'Admission Enquiry',privacy:'Privacy Policy',terms:'Terms of Use',notfound:'Page not found'};
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+let cat=-1,pending=null,sending=false;
+
+/* Courses */
+$('#filters').innerHTML=['All courses',...LABEL].map((l,i)=>`<button class="chip" type="button" aria-pressed="${i===0}" data-c="${i-1}">${esc(l)}</button>`).join('');
+$('#filters').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;cat=+b.dataset.c;document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c===b));draw();};
+function draw(){
+  const q=$('#q').value.trim().toLowerCase();
+  const list=C.map((c,i)=>({n:c[0],k:c[1],i})).filter(c=>(cat<0||c.k===cat)&&c.n.toLowerCase().includes(q));
+  $('#grid').innerHTML=list.map(c=>`<article class="card"><p class="tag">${esc(LABEL[c.k])}</p><h3>${esc(c.n)}</h3><p class="ph">Detailed course information will be updated by the institute.</p><p class="hint">Contact us for course fees and detailed information.</p><div class="row"><button class="btn btn-g" type="button" data-more="${c.i}">Learn more</button><button class="btn btn-o" type="button" data-enq="${c.i}">Enquire now</button></div></article>`).join('');
+  $('#empty').hidden=list.length>0;
+  $('#count').textContent=`${list.length} of ${C.length} courses shown`;
+}
+$('#q').oninput=draw;
+$('#course').innerHTML='<option value="">Select a course</option>'+C.map(c=>`<option>${esc(c[0])}</option>`).join('')+'<option>Not sure yet</option>';
+$('#grid').onclick=e=>{
+  const m=e.target.closest('[data-more],[data-enq]');if(!m)return;
+  if(m.dataset.enq!==undefined)return enquire(+m.dataset.enq);
+  const i=+m.dataset.more;
+  $('#cdc').textContent=LABEL[C[i][1]];$('#cdt').textContent=C[i][0];
+  $('#cde').onclick=()=>enquire(i);
+  $('#cd').showModal();
+};
+function enquire(i){pending=i;$('#cd').close();go('enquiry');}
+
+/* Dialogs */
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
+$('#iso-open').onclick=()=>$('#lb').showModal();
+$('#zm').onclick=()=>{const z=$('#lbw').classList.toggle('zoomed');$('#zm').textContent=z?'Zoom out':'Zoom in';$('#zm').setAttribute('aria-pressed',z);};
+
+/* Contact */
+$('#dir').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('AST Education, '+ADDR);
+$('#copy').onclick=async()=>{try{await navigator.clipboard.writeText(ADDR);$('#cs').textContent='Address copied.';}catch(e){$('#cs').textContent='Copy is not available here. Select the address and copy it manually.';}};
+
+/* Enquiry form */
+const V={
+  name:v=>v.length>=2&&v.length<=80?'':'Enter the student’s name, 2 to 80 characters.',
+  mobile:v=>/^(\+91)?[6-9]\d{9}$/.test(v.replace(/[\s-]/g,''))?'':'Enter a 10-digit Indian mobile number that starts with 6, 7, 8 or 9.',
+  email:v=>!v||(v.length<=120&&/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))?'':'Enter an email address such as name@example.com, or leave this empty.',
+  qualification:v=>v?'':'Choose a qualification.',
+  course:v=>v?'':'Choose a course, or select Not sure yet.',
+  consent:v=>v?'':'Tick the consent box to continue.'
+};
+const clean=s=>s.replace(/[\r\n\t]+/g,' ').slice(0,500);
+$('#f').onsubmit=e=>{
+  e.preventDefault();
+  if(sending||$('#website').value)return;
+  let first=null,ok=true;
+  for(const k of Object.keys(V)){
+    const el=$('#'+k),v=el.type==='checkbox'?el.checked:el.value.trim();
+    const m=V[k](v);
+    el.setAttribute('aria-invalid',m?'true':'false');
+    $('#e-'+k).textContent=m;
+    if(m){ok=false;first=first||el;}
+  }
+  if(!ok){$('#form-e').textContent='Please fix the highlighted fields.';first.focus();return;}
+  $('#form-e').textContent='';
+  const g=k=>$('#'+k).value.trim();
+  const msg='Hello AST Education, I would like to enquire about admission.\n\n'
+    +'Student Name: '+clean(g('name'))+'\n'
+    +'Mobile Number: '+clean(g('mobile'))+'\n'
+    +'Email: '+(clean(g('email'))||'Not provided')+'\n'
+    +'Qualification: '+clean(g('qualification'))+'\n'
+    +'Interested Course: '+clean(g('course'))+'\n'
+    +'Message: '+(clean(g('message'))||'None');
+  const url='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+  sending=true;$('#sub').disabled=true;
+  $('#wal').href=url;
+  window.open(url,'_blank','noopener,noreferrer');
+  $('#f').hidden=true;$('#ok').hidden=false;$('#ok').focus();
+  setTimeout(()=>{sending=false;$('#sub').disabled=false;},20000);
+};
+$('#again').onclick=()=>{$('#f').reset();document.querySelectorAll('[aria-invalid]').forEach(el=>el.setAttribute('aria-invalid','false'));document.querySelectorAll('.err').forEach(d=>d.textContent='');$('#f').hidden=false;$('#ok').hidden=true;$('#name').focus();};
+
+/* Routing */
+function route(){
+  let v=location.hash.slice(1)||'home';
+  if(!Object.hasOwn(T,v))v='notfound';
+  document.querySelectorAll('[data-view]').forEach(s=>{s.hidden=s.dataset.view!==v;});
+  document.querySelectorAll('nav a').forEach(a=>{a.getAttribute('href')==='#'+v?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current');});
+  if(v==='enquiry'&&pending!==null){$('#course').value=C[pending][0];pending=null;}
+  if(v==='courses')draw();
+  document.title=T[v]+(v==='home'?'':' | AST Education, Roorkee');
+  $('header').classList.remove('open');$('#mb').setAttribute('aria-expanded','false');
+  const h=document.querySelector('[data-view="'+v+'"] h1');
+  if(h)h.focus({preventScroll:true});
+  window.scrollTo(0,0);
+}
+function go(v){location.hash=v;route();}
+$('#mb').onclick=()=>{const o=$('header').classList.toggle('open');$('#mb').setAttribute('aria-expanded',o);};
+window.addEventListener('hashchange',route);
+route();
+</script>
+</body>
+</html>

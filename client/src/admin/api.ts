@@ -1,0 +1,82 @@
+export type EnquiryStatus = 'new' | 'contacted' | 'follow-up' | 'admitted' | 'rejected';
+
+export const STATUS_LABELS: Record<EnquiryStatus, string> = {
+  new: 'New',
+  contacted: 'Contacted',
+  'follow-up': 'Follow-up',
+  admitted: 'Admitted',
+  rejected: 'Rejected',
+};
+export const STATUSES = Object.keys(STATUS_LABELS) as EnquiryStatus[];
+
+export interface Enquiry {
+  id: string;
+  studentName: string;
+  mobile: string;
+  email: string;
+  qualification: string;
+  interestedCourse: string;
+  message: string;
+  status: EnquiryStatus;
+  createdAt: string;
+  updatedAt: string;
+  statusUpdatedAt?: string;
+  internalNotes?: string;
+}
+
+export type VideoCategory = 'centre-tour' | 'student-feedback' | 'parent-feedback' | 'course-demonstration' | 'events-activities' | 'promotional' | 'achievements' | 'other';
+export type VideoStatus = 'draft' | 'published' | 'archived';
+export interface AdminVideo { id: string; youtubeUrl: string; youtubeId: string; title: string; description: string; category: VideoCategory; status: VideoStatus; isFeatured: boolean; displayOrder: number; consentStatus: 'pending' | 'confirmed' | 'withdrawn'; consentEvidence: string; isMinor: boolean; guardianConsentConfirmed: boolean; embedUrl: string; thumbnailUrl: string; }
+
+export interface Admin {
+  id: string;
+  email: string;
+  name: string;
+  role: 'owner' | 'staff';
+}
+
+export class ApiError extends Error {
+  status: number;
+  fields?: Record<string, string[]>;
+  constructor(status: number, message: string, fields?: Record<string, string[]>) {
+    super(message);
+    this.status = status;
+    this.fields = fields;
+  }
+}
+
+export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const headers: Record<string, string> = { Accept: 'application/json' };
+  if (init.body) headers['Content-Type'] = 'application/json';
+  // Browsers send this only same-origin; cross-site pages cannot add it without a preflight we refuse.
+  if (init.method && init.method !== 'GET') headers['X-Admin-Request'] = '1';
+
+  const res = await fetch(`/api/admin${path}`, { ...init, headers, credentials: 'same-origin' });
+  if (res.status === 204) return undefined as T;
+
+  const body = await res.json().catch(() => null);
+  if (!res.ok) {
+    throw new ApiError(res.status, body?.error?.message ?? 'Something went wrong. Please try again.', body?.error?.fields);
+  }
+  return body as T;
+}
+
+export const adminApi = {
+  me: () => request<{ admin: Admin }>('/auth/me'),
+  login: (email: string, password: string) =>
+    request<{ admin: Admin }>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  logout: () => request<void>('/auth/logout', { method: 'POST' }),
+  stats: () => request<{ total: number; counts: Record<EnquiryStatus, number> }>('/enquiries/stats'),
+  list: (params: URLSearchParams) =>
+    request<{ items: Enquiry[]; page: number; limit: number; total: number; pages: number }>(`/enquiries?${params}`),
+  get: (id: string) => request<{ enquiry: Enquiry }>(`/enquiries/${id}`),
+  update: (id: string, data: { status?: EnquiryStatus; internalNotes?: string }) =>
+    request<{ enquiry: Enquiry }>(`/enquiries/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  videos: () => request<{ items: AdminVideo[] }>('/videos'),
+  createVideo: (data: Omit<AdminVideo, 'id' | 'youtubeId' | 'embedUrl' | 'thumbnailUrl'>) => request<{ item: AdminVideo }>('/videos', { method: 'POST', body: JSON.stringify(data) }),
+  updateVideo: (id: string, data: Partial<Omit<AdminVideo, 'id' | 'youtubeId' | 'embedUrl' | 'thumbnailUrl'>>) => request<{ item: AdminVideo }>(`/videos/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  deleteVideo: (id: string) => request<void>(`/videos/${id}`, { method: 'DELETE' }),
+};
+
+const formatter = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Kolkata' });
+export const formatDate = (iso: string): string => formatter.format(new Date(iso));
