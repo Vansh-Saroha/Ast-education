@@ -31,7 +31,9 @@ const schema = z
     }
   });
 
-const parsed = schema.safeParse(process.env);
+// A blank line in .env (for example "S3_BUCKET=") means the setting is not set, so optional values use their defaults.
+const configured = Object.fromEntries(Object.entries(process.env).filter(([, value]) => value !== undefined && value !== ''));
+const parsed = schema.safeParse(configured);
 if (!parsed.success) {
   console.error('Invalid environment configuration:', parsed.error.flatten().fieldErrors);
   process.exit(1);

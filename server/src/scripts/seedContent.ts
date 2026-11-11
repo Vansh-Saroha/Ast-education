@@ -31,7 +31,28 @@ let portraits = 0;
 for (const role of APPROVED_LEADERSHIP) {
   const res = await LeadershipProfile.updateOne(
     { profileType: role.profileType },
-    { $setOnInsert: { profileType: role.profileType, designation: role.designation, status: 'published', verification: 'pending', photoPermission: 'unconfirmed', portraitAssetId: null } },
+    {
+      $set: {
+        profileType: role.profileType,
+        designation: role.designation,
+        name: role.name,
+        qualifications: role.qualifications,
+        experience: role.experience,
+        biography: role.biography,
+        responsibilities: role.responsibilities,
+        skills: role.skills,
+        teachingManagement: role.teachingManagement,
+        achievements: '',
+        visionMission: role.visionMission,
+        studentMessage: '',
+        quote: role.quote,
+        status: 'published',
+        verification: 'verified',
+        verifiedAt: new Date(),
+        photoPermission: 'confirmed',
+      },
+      $setOnInsert: { portraitAssetId: null },
+    },
     { upsert: true },
   );
   if (res.upsertedCount) leaders++;

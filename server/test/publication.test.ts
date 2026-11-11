@@ -146,6 +146,15 @@ r = buildReviewUpdate({ imageAssetId: 'c'.repeat(24), permissionConfirmed: true 
 assert.equal(r.ok && r.data.permissionConfirmed, false, 'a replacement photograph is not confirmed, even if the box is still ticked');
 r = buildReviewUpdate({ altText: 'Same', permissionConfirmed: true }, { ...staff, current: { altText: 'Same', imageAssetId: 'd'.repeat(24), permissionConfirmed: true } });
 assert.equal(r.ok && r.data.permissionConfirmed, true, 'an unchanged photograph keeps its confirmation');
+r = buildReviewUpdate({ permissionConfirmed: false }, { ...staff, isEdit: true, current: { permissionConfirmed: true } });
+assert.equal(r.ok, false, 'staff cannot withdraw gallery publication permission');
+r = buildReviewUpdate({ permissionConfirmed: false }, { ...owner, isEdit: true, current: { permissionConfirmed: true } });
+assert.equal(r.ok && r.data.permissionConfirmed, false, 'owner can withdraw gallery publication permission');
+
+r = buildReviewUpdate({ consentStatus: 'confirmed' }, { ...staff, isEdit: true, current: { consentStatus: 'pending' } });
+assert.equal(r.ok, false, 'staff cannot confirm testimonial consent');
+r = buildReviewUpdate({ consentStatus: 'confirmed' }, { ...owner, isEdit: true, current: { consentStatus: 'pending' } });
+assert.equal(r.ok && r.data.consentStatus, 'confirmed', 'owner can confirm testimonial consent');
 
 // 7f. Creating a record is not an edit
 r = buildReviewUpdate({ category: 'events', portraitAssetId: 'c'.repeat(24) }, { role: 'staff', adminId: 's', isEdit: false });

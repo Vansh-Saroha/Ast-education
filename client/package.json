@@ -9,10 +9,11 @@
     "test": "tsx test/dataState.test.ts && tsx test/render.test.tsx && tsx test/upload.test.ts",
     "build": "tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
-    "generate:approved": "python3 scripts/generate-approved.py"
+    "generate:approved": "node scripts/generate-approved.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "gsap": "^3.15.1",
     "html-react-parser": "^5.1.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

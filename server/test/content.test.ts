@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { createApp } from '../src/app.js';
 import { publicFilters } from '../src/routes/public.js';
-import { contentSchemas, factKeySchema, updateFactSchema } from '../src/validators/content.js';
+import { contentSchemas, factKeySchema, updateFactSchema, createFactSchema } from '../src/validators/content.js';
 import { buildReviewUpdate } from '../src/routes/adminContent.js';
 
 // 1. Public visibility rules: the single source of truth for what the website may show
@@ -12,7 +12,11 @@ assert.deepEqual(publicFilters.leadership(), { status: 'published', verification
 assert.deepEqual(publicFilters.gallery(), { status: 'published', verification: 'verified', permissionConfirmed: true });
 assert.deepEqual(publicFilters.testimonials(), { status: 'published', verification: 'verified', consentStatus: 'confirmed' });
 assert.deepEqual(publicFilters.videos(), { status: 'published', consentStatus: 'confirmed', $or: [{ isMinor: false }, { guardianConsentConfirmed: true }] });
-assert.deepEqual(publicFilters.facts(), { verification: 'verified', value: { $ne: '' } });
+assert.deepEqual(publicFilters.facts(), {
+  verification: 'verified',
+  value: { $ne: '' },
+  $or: [{ publicVisibility: true }, { publicVisibility: { $exists: false } }],
+});
 
 // 2. Content validation
 const course = contentSchemas.courses.create;
@@ -45,6 +49,8 @@ assert.equal(updateFactSchema.safeParse({ value: '5 December 2023' }).success, t
 assert.equal(updateFactSchema.safeParse({ googleRating: '4.9' }).success, false, 'unknown fact field refused');
 assert.equal(factKeySchema.safeParse('../secret').success, false, 'path-like fact key refused');
 assert.equal(factKeySchema.safeParse('phone').success, true, 'valid fact key');
+assert.equal(createFactSchema.safeParse({ key: 'gstNumber', label: 'GST Number', value: '22AAAAA0000A1Z5', publicVisibility: true }).success, true, 'custom fact accepted');
+assert.equal(createFactSchema.safeParse({ key: 'GSTNumber', label: 'GST Number', value: 'value' }).success, false, 'fact keys start lowercase');
 
 // 3. Admin content endpoints refuse anonymous access before any database work
 const server = createApp().listen(0);

@@ -105,6 +105,10 @@ assert.doesNotMatch(routeSource, /max-age=86400/, 'the long public cache for ima
 assert.match(routeSource, /if \(!\(await isAssetPubliclyUsed\(String\(asset\._id\)\)\)\) \{/, 'public image delivery checks that a permitted record uses the image (static check)');
 const mediaRouteSource = readFileSync(new URL('../src/routes/media.ts', import.meta.url), 'utf8');
 assert.match(mediaRouteSource, /if \(refs\.total > 0\) \{/, 'deletion is refused while a record still uses the image (static check)');
+const mediaServiceSource = readFileSync(new URL('../src/media/service.ts', import.meta.url), 'utf8');
+assert.match(mediaServiceSource, /Testimonial\.exists\(\{\s*photoAssetId: assetId,\s*status: 'approved',\s*consent: true,\s*\}\)/, 'approved, consented testimonial photos are publicly deliverable');
+assert.match(mediaServiceSource, /Testimonial\.countDocuments\(\{ photoAssetId: assetId \}\)/, 'testimonial photos are retained while referenced');
+assert.match(mediaRouteSource, /refs\.testimonials \? 'a testimonial' : ''/, 'asset deletion reports testimonial references');
 
 // 6c. Orphan detection: only files this application writes are considered, and only when old and unreferenced
 assert.equal(isStorageKey(variantKey('e'.repeat(32), 480)), true);

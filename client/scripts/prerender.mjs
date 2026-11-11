@@ -18,6 +18,26 @@ if (!existsSync(ssrEntry)) {
   process.exit(1);
 }
 const shell = readFileSync(join(dist, 'index.html'), 'utf8');
+const manifestPath = join(dist, '.vite', 'manifest.json');
+if (!existsSync(manifestPath)) {
+  console.error('Vite manifest is missing. Run `vite build` before prerendering.');
+  process.exit(1);
+}
+const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+const pageEntries = {
+  '/': 'src/pages/ApprovedPage.tsx',
+  '/about': 'src/pages/ApprovedPage.tsx',
+  '/courses': 'src/pages/CoursesPage.tsx',
+  '/leadership': 'src/pages/LeadershipPage.tsx',
+  '/certifications': 'src/pages/CertificationsPage.tsx',
+  '/gallery': 'src/pages/GalleryPage.tsx',
+  '/videos': 'src/pages/VideosPage.tsx',
+  '/testimonials': 'src/pages/TestimonialsPage.tsx',
+  '/contact': 'src/pages/ContactPage.tsx',
+  '/enquiry': 'src/pages/EnquiryPage.tsx',
+  '/privacy': 'src/pages/LegalPages.tsx',
+  '/terms': 'src/pages/LegalPages.tsx',
+};
 const ROOT_MARKER = '<div id="root"></div>';
 if (!shell.includes(ROOT_MARKER)) {
   console.error('Unexpected index.html: the empty root element was not found.');
@@ -28,6 +48,36 @@ const { render } = await import(pathToFileURL(ssrEntry).href);
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const absolute = (path) => (siteUrl ? `${siteUrl}${path}` : '');
 const targetFor = (path) => (path === '/' ? join(dist, 'index.html') : join(dist, path.slice(1), 'index.html'));
+
+function stylesForRoute(path) {
+  const entryKey = pageEntries[path];
+  if (!entryKey) {
+    console.error(`No page CSS manifest mapping for ${path}.`);
+    process.exit(1);
+  }
+  const visited = new Set();
+  const styles = new Set();
+  const visit = (key) => {
+    if (visited.has(key)) return;
+    visited.add(key);
+    const entry = manifest[key];
+    // Static page imports have their styles included in the shell stylesheet.
+    if (!entry) return;
+    for (const stylesheet of entry.css ?? []) styles.add(stylesheet);
+    for (const imported of entry.imports ?? []) visit(imported);
+  };
+  visit(entryKey);
+  return [...styles];
+}
+
+const shellStyles = new Set([...shell.matchAll(/<link\b[^>]*href="([^"]+\.css)"[^>]*>/g)].map((match) => match[1]));
+function pageStyles(path) {
+  return stylesForRoute(path)
+    .map((stylesheet) => `/${stylesheet}`)
+    .filter((href) => !shellStyles.has(href))
+    .map((href) => `<link rel="stylesheet" href="${href}" />`)
+    .join('\n    ');
+}
 
 function organisationJsonLd() {
   // Only verified facts appear here. Hours and ratings are excluded until they are verified.
@@ -77,7 +127,7 @@ for (const route of routes) {
   const html = shell
     .replace(/<title>[\s\S]*?<\/title>/, () => '')
     .replace(/<meta name="description"[^>]*>/, () => '')
-    .replace('</head>', () => `    ${headTags(route)}\n  </head>`)
+    .replace('</head>', () => `    ${pageStyles(route.path)}\n    ${headTags(route)}\n  </head>`)
     .replace(ROOT_MARKER, () => `<div id="root">${body}</div>`);
   const target = targetFor(route.path);
   mkdirSync(dirname(target), { recursive: true });

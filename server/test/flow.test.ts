@@ -19,7 +19,7 @@ const { createApp } = await import('../src/app.js');
 const { createAsset } = await import('../src/media/service.js');
 const { getStorage } = await import('../src/media/storage.js');
 const { isStorageKey, plannedWidths, variantKey } = await import('../src/media/format.js');
-const { GalleryItem, LeadershipProfile } = await import('../src/models/Content.js');
+const { GalleryItem, LeadershipProfile, Testimonial } = await import('../src/models/Content.js');
 const { MediaAsset } = await import('../src/models/Media.js');
 
 // --- Database stand-ins (the only part not exercised live) ---
@@ -46,9 +46,13 @@ const assets = new Map<string, Record<string, unknown>>();
 let galleryRows: unknown[] = [];
 let galleryReferenced = false;
 let portraitReferenced = false;
+let testimonialRows: unknown[] = [];
+let testimonialReferenced = false;
 (GalleryItem as unknown as Record<string, unknown>).find = () => chain(galleryRows);
 (GalleryItem as unknown as Record<string, unknown>).exists = async () => (galleryReferenced ? { _id: 'ref' } : null);
 (LeadershipProfile as unknown as Record<string, unknown>).exists = async () => (portraitReferenced ? { _id: 'ref' } : null);
+(Testimonial as unknown as Record<string, unknown>).find = () => chain(testimonialRows);
+(Testimonial as unknown as Record<string, unknown>).exists = async () => (testimonialReferenced ? { _id: 'ref' } : null);
 
 // --- Real HTTP server ---
 const server = createApp().listen(0);
@@ -140,6 +144,33 @@ try {
   assert.equal((await fetch(`${base}/api/public/media/${pid}/480`)).status, 404, 'a portrait without permission is not served');
   const unused = await createAsset(await sharp({ create: { width: 300, height: 300, channels: 3, background: '#000000' } }).jpeg().toBuffer(), 'gallery', 'u.jpg');
   assert.equal((await fetch(`${base}/api/public/media/${String(unused._id)}/300`)).status, 404, 'an unused image is not served');
+
+  // 6. Testimonial photos use the actual available variant, including sources smaller than 480px.
+  const studentPhoto = await createAsset(await sharp({ create: { width: 300, height: 200, channels: 3, background: '#082B50' } }).png().toBuffer(), 'testimonial', 'student.png');
+  const studentPhotoId = String(studentPhoto._id);
+  testimonialReferenced = true;
+  testimonialRows = [{
+    _id: new Types.ObjectId(),
+    studentName: 'Test Student',
+    courseName: 'Computer Education',
+    review: 'A genuine student experience.',
+    feedback: 'A genuine student experience.',
+    rating: 5,
+    photoAssetId: { _id: studentPhoto._id, width: studentPhoto.width, height: studentPhoto.height, variants: studentPhoto.variants },
+  }];
+  const testimonialRes = await fetch(`${base}/api/public/testimonials`);
+  assert.equal(testimonialRes.status, 200);
+  const testimonial = (await testimonialRes.json() as { items: Array<{ photo: { src: string; srcSet: string } }> }).items[0];
+  assert.equal(testimonial.photo.src, `/api/public/media/${studentPhotoId}/300`, 'a testimonial uses its actual stored source width');
+  assert.equal(testimonial.photo.srcSet, `/api/public/media/${studentPhotoId}/300 300w`);
+  const studentImageRes = await fetch(`http://127.0.0.1:${(server.address() as { port: number }).port}${testimonial.photo.src}`);
+  assert.equal(studentImageRes.status, 200, 'a referenced testimonial photo is publicly delivered');
+  assert.equal(studentImageRes.headers.get('content-type'), 'image/webp');
+  assert.equal(studentImageRes.headers.get('cache-control'), 'private, no-store');
+  const expectedStudentBytes = await readAll((await getStorage().get(variantKey(String(studentPhoto.storageId), 300))).body);
+  assert.ok(Buffer.from(await studentImageRes.arrayBuffer()).equals(expectedStudentBytes), 'testimonial photo returns the stored variant');
+  testimonialReferenced = false;
+  assert.equal((await fetch(`http://127.0.0.1:${(server.address() as { port: number }).port}${testimonial.photo.src}`)).status, 404, 'unapproved testimonial photos remain private');
 
   console.log('All processing-to-delivery flow tests passed.');
 } finally {

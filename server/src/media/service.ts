@@ -1,7 +1,7 @@
 import { pipeline } from 'node:stream/promises';
 import type { Response } from 'express';
 import { Types } from 'mongoose';
-import { GalleryItem, LeadershipProfile } from '../models/Content.js';
+import { BusinessFact, GalleryItem, LeadershipProfile, Testimonial } from '../models/Content.js';
 import { MediaAsset, type MediaPurpose } from '../models/Media.js';
 import { publicFilters } from '../visibility.js';
 import { MissingObjectError, getStorage } from './storage.js';
@@ -58,10 +58,12 @@ export async function createAsset(input: Buffer, purpose: MediaPurpose, displayN
 }
 
 /** Counts the records that use an image. Archived and draft records count too, because they still reference it. */
-export async function findReferences(assetId: string): Promise<{ galleryItems: number; portraits: number; total: number }> {
+export async function findReferences(assetId: string): Promise<{ galleryItems: number; portraits: number; testimonials: number; facts: number; total: number }> {
   const galleryItems = await GalleryItem.countDocuments({ imageAssetId: assetId });
   const portraits = await LeadershipProfile.countDocuments({ portraitAssetId: assetId });
-  return { galleryItems, portraits, total: galleryItems + portraits };
+  const testimonials = await Testimonial.countDocuments({ photoAssetId: assetId });
+  const facts = await BusinessFact.countDocuments({ proofAssetId: assetId });
+  return { galleryItems, portraits, testimonials, facts, total: galleryItems + portraits + testimonials + facts };
 }
 
 /** Deletes an image and all its variants, but only when no record references it. Returns true when deleted. */
@@ -84,7 +86,13 @@ export async function isAssetPubliclyUsed(assetId: string): Promise<boolean> {
   const gallery = await GalleryItem.exists({ imageAssetId: assetId, ...publicFilters.gallery() });
   if (gallery) return true;
   const portrait = await LeadershipProfile.exists({ portraitAssetId: assetId, ...publicFilters.leadership(), photoPermission: 'confirmed' });
-  return !!portrait;
+  if (portrait) return true;
+  const testimonial = await Testimonial.exists({
+    photoAssetId: assetId,
+    status: 'approved',
+    consent: true,
+  });
+  return !!testimonial;
 }
 
 /** Streams one stored variant to the response. Sends 404 when the object is missing. */

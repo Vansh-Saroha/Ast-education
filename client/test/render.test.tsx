@@ -54,6 +54,10 @@ assert.match(approvedHome, /https:\/\/wa\.me\/919999988888/, 'approved WhatsApp 
 assert.match(approvedHome, /\+91 88888 77777/, 'approved visible phone text uses the live verified phone');
 assert.doesNotMatch(approvedHome, /919690766514/, 'the old WhatsApp number is not left in approved markup');
 
+const approvedHomeNoFacts = page(<ApprovedHtml html={APPROVED_HTML.home} />, { facts: {}, availability: 'live', snapshotDate: '2026-11-03' });
+assert.doesNotMatch(approvedHomeNoFacts, /href="tel:/, 'missing live phone removes the approved call action');
+assert.doesNotMatch(approvedHomeNoFacts, /href="https:\/\/wa\.me\//, 'missing live WhatsApp removes the approved message action');
+
 // 6. Videos show a loading state until the request settles; the empty state is not shown prematurely.
 const loadingVideos = page(<VideosPage />);
 assert.match(loadingVideos, /Loading approved videos/, 'video loading state is visible');

@@ -27,6 +27,15 @@ export interface FactsState {
   availability: Availability;
   facts: Record<string, string>;
   snapshotDate: string;
+  items?: PublicFact[];
+}
+
+export interface PublicFact {
+  key: string;
+  label: string;
+  value: string;
+  source?: 'owner-confirmed' | 'document-checked' | 'none';
+  custom?: boolean;
 }
 
 /**
@@ -34,7 +43,7 @@ export interface FactsState {
  * disappears from the site. The snapshot is used only when the server cannot be reached.
  */
 export function resolveFacts(
-  result: ApiResult<Array<{ key: string; value: string }>>,
+  result: ApiResult<PublicFact[]>,
   snapshotFacts: Record<string, string>,
   snapshotDate: string,
 ): FactsState {
@@ -43,5 +52,6 @@ export function resolveFacts(
     availability: 'live',
     facts: Object.fromEntries(result.items.map((i) => [i.key, i.value])),
     snapshotDate,
+    items: result.items,
   };
 }

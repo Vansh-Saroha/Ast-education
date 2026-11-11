@@ -1,0 +1,114 @@
+{
+  "_ImageUploader-CyBXnbNG.js": {
+    "file": "assets/ImageUploader-CyBXnbNG.js",
+    "name": "ImageUploader",
+    "imports": [
+      "_api-BUgD-bVR.js"
+    ]
+  },
+  "_api-BUgD-bVR.js": {
+    "file": "assets/api-BUgD-bVR.js",
+    "name": "api"
+  },
+  "src/admin/AdminShell.tsx": {
+    "file": "assets/AdminShell-DzVzKvF_.js",
+    "name": "AdminShell",
+    "src": "src/admin/AdminShell.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js"
+    ],
+    "css": [
+      "assets/clay-admin-DwZvZ6cY.css"
+    ]
+  },
+  "src/admin/ContentPage.tsx": {
+    "file": "assets/ContentPage-OCsbmf2B.js",
+    "name": "ContentPage",
+    "src": "src/admin/ContentPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js",
+      "_ImageUploader-CyBXnbNG.js"
+    ]
+  },
+  "src/admin/DashboardPage.tsx": {
+    "file": "assets/DashboardPage-BjIzW2Kf.js",
+    "name": "DashboardPage",
+    "src": "src/admin/DashboardPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/entry-server.tsx",
+      "_api-BUgD-bVR.js"
+    ]
+  },
+  "src/admin/EnquiryDetailPage.tsx": {
+    "file": "assets/EnquiryDetailPage-BTn2Ph5M.js",
+    "name": "EnquiryDetailPage",
+    "src": "src/admin/EnquiryDetailPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js"
+    ]
+  },
+  "src/admin/FactsPage.tsx": {
+    "file": "assets/FactsPage-Cl9t9HI5.js",
+    "name": "FactsPage",
+    "src": "src/admin/FactsPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js",
+      "_ImageUploader-CyBXnbNG.js"
+    ]
+  },
+  "src/admin/LoginPage.tsx": {
+    "file": "assets/LoginPage-jTfljuXX.js",
+    "name": "LoginPage",
+    "src": "src/admin/LoginPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js"
+    ],
+    "css": [
+      "assets/LoginPage-DAyPgPso.css",
+      "assets/clay-admin-DwZvZ6cY.css"
+    ]
+  },
+  "src/admin/TestimonialsManagePage.tsx": {
+    "file": "assets/TestimonialsManagePage-D1EJqicH.js",
+    "name": "TestimonialsManagePage",
+    "src": "src/admin/TestimonialsManagePage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js"
+    ]
+  },
+  "src/admin/VideosPage.tsx": {
+    "file": "assets/VideosPage-CMbJablK.js",
+    "name": "VideosPage",
+    "src": "src/admin/VideosPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_api-BUgD-bVR.js"
+    ]
+  },
+  "src/entry-server.tsx": {
+    "file": "entry-server.js",
+    "name": "entry-server",
+    "src": "src/entry-server.tsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/admin/AdminShell.tsx",
+      "src/admin/ContentPage.tsx",
+      "src/admin/DashboardPage.tsx",
+      "src/admin/EnquiryDetailPage.tsx",
+      "src/admin/FactsPage.tsx",
+      "src/admin/LoginPage.tsx",
+      "src/admin/VideosPage.tsx",
+      "src/admin/TestimonialsManagePage.tsx"
+    ],
+    "css": [
+      "assets/entry-server-Bc-JftxW.css"
+    ]
+  }
+}

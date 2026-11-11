@@ -23,3 +23,16 @@ export const enquiryLimiter = rateLimit({
     },
   },
 });
+
+export const testimonialLimiter = rateLimit({
+  windowMs: WINDOW_MS,
+  limit: 10,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: {
+    error: {
+      code: 'RATE_LIMITED',
+      message: 'Too many testimonial submissions or uploads. Please try again in 15 minutes.',
+    },
+  },
+});

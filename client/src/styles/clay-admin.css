@@ -1,0 +1,119 @@
+/* ============================================================================
+   Admin dashboard in the Claymorphism theme.
+   Imported after admin.css in AdminShell.tsx and LoginPage.tsx, so equal-specificity
+   rules here win. Styling only: no admin logic, routes or API calls change.
+   ============================================================================ */
+
+.admin {
+  background: linear-gradient(180deg, #F5F8FF 0%, var(--clay-bg) 50%, var(--clay-bg-2) 100%);
+}
+.admin-side {
+  top: 14px;
+  height: calc(100vh - 28px);
+  margin: 14px 0 14px 14px;
+  padding: 24px 18px;
+  border-radius: 32px;
+  background: linear-gradient(160deg, #1B3D8F 0%, #102B66 60%, #0C2052 100%);
+  box-shadow: 14px 18px 40px rgba(16, 43, 102, .28), inset 4px 6px 12px rgba(255, 255, 255, .12), inset -6px -8px 16px rgba(0, 0, 0, .2);
+}
+.admin-brand img {
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .25), inset 2px 2px 4px rgba(255, 255, 255, .9);
+}
+.admin-side nav a { border-radius: 16px; color: #E4ECFF; font-weight: 600; }
+.admin-side nav a:hover { background: rgba(255, 255, 255, .08); }
+.admin-side nav a.active {
+  background: linear-gradient(135deg, rgba(66, 200, 255, .32), rgba(134, 91, 255, .26));
+  border-left-color: transparent;
+  box-shadow: inset 2px 2px 6px rgba(255, 255, 255, .14), 4px 6px 12px rgba(0, 0, 0, .18);
+}
+.admin-user .btn-g { color: #fff; border-color: rgba(255, 255, 255, .6); background: rgba(255, 255, 255, .08); box-shadow: none; }
+
+.admin-main { padding-top: clamp(20px, 3vw, 36px); }
+.admin-page h1, .admin-page h2, .admin-page h3, .admin-card h2, .admin-card h3, .enq-table th { color: var(--clay-deep); }
+
+.admin-card, .stat, .enq-table tr, .admin-login-card {
+  border: 1px solid #fff;
+  border-radius: 28px;
+  background: var(--clay-surface);
+  box-shadow: var(--clay-raised);
+}
+.admin-card { padding: clamp(18px, 2vw, 26px); }
+.stat { padding: 16px 18px; }
+.stat strong { color: var(--clay-deep); }
+.stat:hover { border-color: #fff; transform: translateY(-4px); box-shadow: var(--clay-raised-hover); }
+.stat.is-active { border: 2px solid var(--clay-blue); padding: 15px 17px; }
+.enq-table th, .enq-table td { border-bottom-color: rgba(16, 43, 102, .10); }
+.table-card .hint { color: var(--clay-text-2); }
+
+.badge { border: 0; box-shadow: inset 1px 1px 3px rgba(255, 255, 255, .9), 2px 3px 6px rgba(16, 43, 102, .08); }
+.badge-new { background: linear-gradient(135deg, #E2F0FF, #D0E4FF); color: var(--clay-deep); }
+.badge-contacted { background: linear-gradient(135deg, #EEF2FA, #DDE5F3); color: #334155; }
+.badge-follow-up { background: linear-gradient(135deg, #FFF6D6, #FFE8A6); color: #5C4300; }
+.badge-admitted { background: linear-gradient(135deg, #E2F8EE, #C6EFD9); color: #0B5D35; }
+.badge-rejected { background: linear-gradient(135deg, #FFEEEC, #FFD5D0); color: #8A1C12; }
+
+.admin .btn-o {
+  color: #fff;
+  background: var(--clay-grad-blue);
+  box-shadow: 6px 9px 18px rgba(23, 105, 255, .30), -3px -3px 10px rgba(255, 255, 255, .8), inset 2px 2px 4px rgba(255, 255, 255, .4), inset -3px -4px 8px rgba(16, 43, 102, .18);
+}
+.admin .btn-g {
+  color: var(--clay-deep);
+  background: linear-gradient(145deg, #FFFFFF, #E8EFFF);
+  border: 2px solid rgba(23, 105, 255, .16);
+}
+.admin .btn-g:hover { background: #fff; }
+.btn-danger {
+  border: 0;
+  color: #9B1C31;
+  background: linear-gradient(145deg, #FFF5F6, #FFD9DE);
+  box-shadow: 5px 6px 12px rgba(155, 28, 49, .12), -3px -3px 8px rgba(255, 255, 255, .95);
+}
+.btn-danger:hover { color: #7A1126; }
+.admin input:focus, .admin select:focus, .admin textarea:focus {
+  outline: none;
+  border-color: rgba(66, 200, 255, .75);
+  box-shadow: var(--clay-inset), 0 0 0 4px rgba(66, 200, 255, .22);
+}
+
+.fact-modal-backdrop { background: rgba(16, 43, 102, .55); backdrop-filter: blur(6px); }
+.fact-modal {
+  border: 1px solid #fff;
+  border-radius: 30px;
+  background: linear-gradient(150deg, #FFFFFF, #EEF4FF);
+  box-shadow: 0 30px 80px rgba(8, 22, 58, .35), inset 4px 4px 10px rgba(255, 255, 255, .9);
+}
+.fact-modal-head { background: transparent; border-bottom-color: rgba(16, 43, 102, .08); }
+.modal-close {
+  background: linear-gradient(145deg, #FFFFFF, #E6EEFF);
+  color: var(--clay-deep);
+  box-shadow: 5px 6px 12px rgba(16, 43, 102, .12), -3px -3px 8px rgba(255, 255, 255, .95);
+}
+.message-box { background: linear-gradient(145deg, #E9F0FF, #F6F9FF); border-radius: 20px; box-shadow: var(--clay-inset); }
+.fact-form input, .fact-form select, .fact-form textarea, .video-form input, .video-form select, .video-form textarea { border: 2px solid transparent; }
+.visibility-toggle input { accent-color: var(--clay-blue); }
+
+.uploader {
+  border: 2px dashed #A9BDEB;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .5);
+}
+.uploader legend { color: var(--clay-deep); }
+.upload-pick { background: var(--clay-grad-deep); box-shadow: 5px 7px 14px rgba(16, 43, 102, .25); }
+.uploader progress { accent-color: var(--clay-blue); }
+.upload-preview { border-radius: 18px; box-shadow: var(--clay-raised); }
+.video-admin-item { border-bottom-color: rgba(16, 43, 102, .10); }
+.video-admin-item > img { border-radius: 18px; box-shadow: var(--clay-raised); }
+
+.admin-login { background: radial-gradient(circle at 20% 10%, rgba(66, 200, 255, .24), transparent 38%), linear-gradient(180deg, #F5F8FF, var(--clay-bg-2)); }
+.admin-login-card { width: min(440px, 100%); padding: 34px; box-shadow: 0 30px 70px rgba(16, 43, 102, .18), inset 4px 4px 10px rgba(255, 255, 255, .9); }
+.admin-login-card h1 { color: var(--clay-deep); }
+
+@media (max-width: 900px) {
+  .admin-side { top: 0; height: auto; margin: 10px; padding: 14px 16px; border-radius: 26px; }
+}
+@media (max-width: 720px) {
+  .fact-modal { border-radius: 30px 30px 0 0; }
+  .enq-table tr { border-radius: 22px; }
+}

@@ -83,8 +83,8 @@ export function parseWidth(raw: string): number | null {
   return isValidWidth(n) ? n : null;
 }
 
-export function parsePurpose(raw: unknown): 'gallery' | 'portrait' | null {
-  return raw === 'gallery' || raw === 'portrait' ? raw : null;
+export function parsePurpose(raw: unknown): 'gallery' | 'portrait' | 'fact-proof' | null {
+  return raw === 'gallery' || raw === 'portrait' || raw === 'fact-proof' ? raw : null;
 }
 
 /** Returns an explanation when an image uploaded for one purpose is attached to a record of another. */

@@ -33,7 +33,7 @@ function auditLog(action: string, adminId: string, extra: Record<string, unknown
 
 mediaRouter.post('/media', requireAdmin, uploadLimiter, rawImage, async (req: Request, res: Response) => {
   const purpose = parsePurpose(req.query.purpose);
-  if (!purpose) return fail(res, 400, 'INVALID_PURPOSE', 'Choose gallery or portrait for this image.');
+  if (!purpose) return fail(res, 400, 'INVALID_PURPOSE', 'Choose gallery, portrait, or fact-proof for this image.');
   if (!Buffer.isBuffer(req.body)) return fail(res, 415, 'UNSUPPORTED_TYPE', 'Upload a JPEG, PNG or WebP image.');
   if (req.body.length === 0) return fail(res, 400, 'EMPTY_FILE', 'The file is empty.');
 
@@ -78,6 +78,7 @@ mediaRouter.delete('/media/:id', requireAdmin, requireRole('owner'), async (req:
     const parts = [
       refs.galleryItems ? `${refs.galleryItems} gallery item${refs.galleryItems === 1 ? '' : 's'}` : '',
       refs.portraits ? 'a leadership profile' : '',
+      refs.testimonials ? 'a testimonial' : '',
     ].filter(Boolean);
     return fail(res, 409, 'IMAGE_IN_USE', `This image is used by ${parts.join(' and ')}. Remove or replace it there first.`);
   }

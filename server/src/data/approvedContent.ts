@@ -2,20 +2,46 @@
 // The client snapshot (client/src/seo/verified-facts.json) must match the verified facts below. A test checks this.
 
 export const APPROVED_COURSES: ReadonlyArray<readonly [name: string, category: string]> = [
-  ['LKG to Class 12', 'school'], ['Academic Coaching', 'school'], ['Subject-wise Academic Support', 'school'],
-  ['B.A. Coaching', 'higher'], ['B.Com Coaching', 'higher'], ['B.Tech Coaching', 'higher'],
+  ['LKG to Class 12', 'school'], ['Academic Coaching', 'school'], ['Subject-wise Support', 'school'],
+  ['B.A.', 'higher'], ['B.Com', 'higher'], ['B.Tech', 'higher'], ['Academic Support', 'higher'],
   ['Basic Computer', 'computer'], ['DCA', 'computer'], ['ADCA', 'computer'], ['CCC', 'computer'],
   ['Tally', 'computer'], ['MS Office', 'computer'], ['Advanced Excel', 'computer'],
   ['Coding Classes', 'technical'], ['Programming Education', 'technical'], ['Technical Skill Development', 'technical'],
   ['English Speaking', 'personality'], ['Communication Skills', 'personality'],
-  ['Motivation Classes', 'personality'], ['Personality Development', 'personality'],
+  ['Motivation', 'personality'], ['Personality Development', 'personality'],
 ];
 
 // portraitSource names a file in server/private-assets. The seed imports it into the media store once.
 // Until the owner confirms photo permission, the portrait is never shown publicly.
 export const APPROVED_LEADERSHIP = [
-  { profileType: 'director', designation: 'Director / Owner', portraitSource: 'director.webp' },
-  { profileType: 'manager', designation: 'Education Manager', portraitSource: 'manager.webp' },
+  {
+    profileType: 'director',
+    designation: 'Director & Chairman',
+    name: 'Ankit Chauhan',
+    qualifications: 'B.Tech, M.Tech',
+    experience: '15 Years of Marketing Experience',
+    biography: 'Leading AST Education with a vision of excellence, innovation, and quality education. Bringing 15 years of marketing experience and a strong commitment towards institutional growth and student success.',
+    responsibilities: 'Provides institutional direction, supports strategic growth, strengthens educational partnerships, and oversees the long-term development of AST Education.',
+    teachingManagement: 'Guides academic and administrative priorities while encouraging innovation, quality standards, and student-focused institutional practices.',
+    skills: 'Institutional leadership, strategic planning, marketing, organizational growth, and relationship building.',
+    visionMission: 'To build an institution driven by excellence, innovation, quality education, and meaningful student success.',
+    quote: 'CONFIDENCE AND HARD WORK IS THE BEST MEDICINE TO KILL THE DISEASE CALLED FAILURE. IT WILL MAKE YOU A SUCCESSFUL PERSON.',
+    portraitSource: 'director.webp',
+  },
+  {
+    profileType: 'manager',
+    designation: 'General Manager & Teacher',
+    name: 'Shalu',
+    qualifications: '',
+    experience: '',
+    biography: 'Dedicated to educational excellence and effective institutional management. Passionate about supporting students, maintaining academic standards, and creating a positive learning environment.',
+    responsibilities: 'Supports daily institutional operations, coordinates academic activities, assists staff and students, and helps maintain an organized and supportive learning environment.',
+    teachingManagement: 'Combines classroom teaching with practical management, student guidance, academic coordination, and consistent communication with the educational team.',
+    skills: 'Academic coordination, teaching, student support, communication, administration, and educational management.',
+    visionMission: 'To create a positive, disciplined, and student-focused learning environment that encourages academic progress and personal development.',
+    quote: 'EDUCATION IS THE PASSPORT TO THE FUTURE, FOR TOMORROW BELONG TO THOSE WHO PREPARE FOR IT TODAY.',
+    portraitSource: 'manager.webp',
+  },
 ] as const;
 
 export type VerificationSource = 'owner-confirmed' | 'document-checked' | 'none';

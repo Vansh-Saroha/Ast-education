@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { messageForStatus, percentOf, reduce, validateFile, ACCEPTED_IMAGE_TYPES, type UploadState } from '../lib/uploadState';
 
 interface Props {
-  purpose: 'gallery' | 'portrait';
+  purpose: 'gallery' | 'portrait' | 'fact-proof';
   label: string;
   value: string | null;
   nullable: boolean;

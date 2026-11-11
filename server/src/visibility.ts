@@ -5,7 +5,11 @@ export const publicFilters = {
   gallery: () => ({ status: 'published', verification: 'verified', permissionConfirmed: true }),
   testimonials: () => ({ status: 'published', verification: 'verified', consentStatus: 'confirmed' }),
   videos: () => ({ status: 'published', consentStatus: 'confirmed', $or: [{ isMinor: false }, { guardianConsentConfirmed: true }] }),
-  facts: () => ({ verification: 'verified', value: { $ne: '' } }),
+  facts: () => ({
+    verification: 'verified',
+    value: { $ne: '' },
+    $or: [{ publicVisibility: true }, { publicVisibility: { $exists: false } }],
+  }),
 };
 
 export interface PortraitRecord {
@@ -44,6 +48,6 @@ export function isGalleryItemPublic(record: GalleryRecord): boolean {
 /**
  * Permission-bearing images are never cached: withdrawing publication permission must take effect on the next request.
  */
-export function publicMediaCacheControl(purpose: 'gallery' | 'portrait'): string {
+export function publicMediaCacheControl(purpose: 'gallery' | 'portrait' | 'testimonial' | 'fact-proof'): string {
   return 'private, no-store';
 }

@@ -1,6 +1,6 @@
 import mongoose, { Schema, type InferSchemaType } from 'mongoose';
 
-export const MEDIA_PURPOSES = ['gallery', 'portrait'] as const;
+export const MEDIA_PURPOSES = ['gallery', 'portrait', 'testimonial', 'fact-proof'] as const;
 export type MediaPurpose = (typeof MEDIA_PURPOSES)[number];
 
 // Metadata only. The image bytes live in the storage provider, never in MongoDB.

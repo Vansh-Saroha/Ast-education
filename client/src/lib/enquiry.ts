@@ -2,11 +2,11 @@ import { z } from 'zod';
 
 // Keep in sync with server/src/config/courses.ts. The server is the final check.
 export const COURSE_OPTIONS = [
-  'LKG to Class 12', 'Academic Coaching', 'Subject-wise Academic Support',
-  'B.A. Coaching', 'B.Com Coaching', 'B.Tech Coaching',
+  'LKG to Class 12', 'Academic Coaching', 'Subject-wise Support',
+  'B.A.', 'B.Com', 'B.Tech', 'Academic Support',
   'Basic Computer', 'DCA', 'ADCA', 'CCC', 'Tally', 'MS Office', 'Advanced Excel',
   'Coding Classes', 'Programming Education', 'Technical Skill Development',
-  'English Speaking', 'Communication Skills', 'Motivation Classes', 'Personality Development',
+  'English Speaking', 'Communication Skills', 'Motivation', 'Personality Development',
   'Not sure yet',
 ];
 

@@ -1,9 +1,11 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { COURSE_OPTIONS, QUALIFICATIONS, buildWhatsAppUrl, enquirySchema, type EnquiryForm } from '../lib/enquiry';
+import { publicGet } from '../lib/publicApi';
 import { useFacts } from '../lib/facts';
+import { AdmissionProcess, ContactAssistance } from '../components/AdmissionGuide';
 
 const EMPTY: EnquiryForm = {
   studentName: '', mobile: '', email: '', qualification: '', course: '', message: '', consent: false, website: '',
@@ -34,6 +36,13 @@ export default function EnquiryPage() {
   const [done, setDone] = useState<{ waUrl: string } | null>(null);
   const [cooling, setCooling] = useState(false);
   const [formError, setFormError] = useState('');
+  const [courseOptions, setCourseOptions] = useState(COURSE_OPTIONS);
+
+  useEffect(() => {
+    publicGet<{ items: Array<{ name: string }> }>('/courses')
+      .then(({ items }) => setCourseOptions(Array.from(new Set([...items.map((course) => course.name), 'Not sure yet']))))
+      .catch(() => setCourseOptions(COURSE_OPTIONS));
+  }, []);
 
   const describe = (k: keyof EnquiryForm) => (errors[k] ? `${String(k)}-error` : undefined);
 
@@ -115,7 +124,7 @@ export default function EnquiryPage() {
           <Field id="course" label="Interested course" error={errors.course?.message}>
             <select id="course" aria-invalid={!!errors.course} aria-describedby={describe('course')} {...register('course')}>
               <option value="">Select a course</option>
-              {COURSE_OPTIONS.map((c) => <option key={c} value={c}>{c}</option>)}
+              {courseOptions.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </Field>
 
@@ -150,6 +159,10 @@ export default function EnquiryPage() {
             </div>
           )}
         </form>
+      </div>
+      <div className="narrow">
+        <AdmissionProcess />
+        <ContactAssistance />
       </div>
     </section>
   );

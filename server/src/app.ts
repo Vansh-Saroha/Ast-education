@@ -8,6 +8,8 @@ import { apiLimiter } from './middleware/rateLimit.js';
 import { adminRouter } from './routes/admin.js';
 import { enquiryRouter } from './routes/enquiries.js';
 import { publicRouter } from './routes/public.js';
+import { testimonialAdminRouter } from './routes/testimonials.js';
+import { testimonialPublicRouter } from './routes/testimonials.js';
 
 export function createApp() {
   const app = express();
@@ -33,6 +35,7 @@ export function createApp() {
     res.json({ status: 'ok' });
   });
   app.use('/api/enquiries', enquiryRouter);
+  app.use('/api/public', testimonialPublicRouter);
   app.use('/api/public', publicRouter);
   app.use('/api/admin', adminRouter);
 

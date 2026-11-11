@@ -72,6 +72,10 @@ const image = responsiveImage(ID, [{ width: 1200 }, { width: 480 }, { width: 960
 assert.ok(image);
 assert.equal(image.src, variantUrl(ID, 1200));
 assert.equal(image.srcSet, `/api/public/media/${ID}/480 480w, /api/public/media/${ID}/960 960w, /api/public/media/${ID}/1200 1200w`);
+const smallImage = responsiveImage(ID, [{ width: 300 }], 300, 200);
+assert.ok(smallImage);
+assert.equal(smallImage.src, variantUrl(ID, 300), 'small photos use their actual stored width instead of a missing 480px variant');
+assert.equal(smallImage.srcSet, `/api/public/media/${ID}/300 300w`);
 assert.equal(responsiveImage(ID, [], 1, 1), null, 'no variants, no image');
 
 console.log('All width-rule tests passed.');

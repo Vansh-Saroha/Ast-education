@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { COURSE_OPTIONS, QUALIFICATIONS } from '../config/courses.js';
+import { QUALIFICATIONS } from '../config/courses.js';
 
 // Removes control characters and angle brackets; keeps line breaks in the free-text message.
 const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F<>]/g;
@@ -34,9 +34,10 @@ export const enquirySchema = z
     qualification: z.enum(QUALIFICATIONS, {
       errorMap: () => ({ message: 'Choose a qualification' }),
     }),
-    course: z.enum(COURSE_OPTIONS, {
-      errorMap: () => ({ message: 'Choose a course, or select Not sure yet' }),
-    }),
+    course: z
+      .string({ required_error: 'Choose a course, or select Not sure yet' })
+      .transform(cleanText)
+      .pipe(z.string().min(1, 'Choose a course, or select Not sure yet').max(80, 'Use 80 characters or fewer')),
     message: z
       .string()
       .max(500, 'Use 500 characters or fewer')

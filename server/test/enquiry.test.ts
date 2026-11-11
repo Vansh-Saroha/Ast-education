@@ -22,7 +22,8 @@ assert.equal(enquirySchema.safeParse({ ...valid, consent: false }).success, fals
 assert.equal(enquirySchema.safeParse({ ...valid, studentName: '<script>x</script>' }).success, false, 'markup in name');
 assert.equal(enquirySchema.safeParse({ ...valid, isAdmin: true }).success, false, 'unknown fields rejected');
 assert.equal(enquirySchema.safeParse({ ...valid, mobile: '12345' }).success, false, 'short mobile rejected');
-assert.equal(enquirySchema.safeParse({ ...valid, course: 'Unlisted course' }).success, false, 'unknown course rejected');
+assert.equal(enquirySchema.safeParse({ ...valid, course: 'New CMS course' }).success, true, 'CMS-managed course accepted by schema');
+assert.equal(enquirySchema.safeParse({ ...valid, course: '' }).success, false, 'empty course rejected');
 
 // 2. HTTP: validation, honeypot and rate limiting (ENQUIRY_RATE_LIMIT_MAX=5 set in the test command)
 const server = createApp().listen(0);

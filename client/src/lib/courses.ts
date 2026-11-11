@@ -12,13 +12,13 @@ export const CATEGORY_LABELS: Record<string, string> = {
 export const APPROVED_LIST_DATE = (snapshot as { snapshotDate: string }).snapshotDate;
 
 export const COURSE_SEED: Array<{ id: string; name: string; category: string; description: string }> = [
-  ['LKG to Class 12', 'school'], ['Academic Coaching', 'school'], ['Subject-wise Academic Support', 'school'],
-  ['B.A. Coaching', 'higher'], ['B.Com Coaching', 'higher'], ['B.Tech Coaching', 'higher'],
+  ['LKG to Class 12', 'school'], ['Academic Coaching', 'school'], ['Subject-wise Support', 'school'],
+  ['B.A.', 'higher'], ['B.Com', 'higher'], ['B.Tech', 'higher'], ['Academic Support', 'higher'],
   ['Basic Computer', 'computer'], ['DCA', 'computer'], ['ADCA', 'computer'], ['CCC', 'computer'],
   ['Tally', 'computer'], ['MS Office', 'computer'], ['Advanced Excel', 'computer'],
   ['Coding Classes', 'technical'], ['Programming Education', 'technical'], ['Technical Skill Development', 'technical'],
   ['English Speaking', 'personality'], ['Communication Skills', 'personality'],
-  ['Motivation Classes', 'personality'], ['Personality Development', 'personality'],
+  ['Motivation', 'personality'], ['Personality Development', 'personality'],
 ].map(([name, category]) => ({
   id: name,
   name,

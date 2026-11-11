@@ -21,6 +21,7 @@ export default function ContentPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState('');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function load() {
     try {
@@ -98,13 +99,21 @@ export default function ContentPage() {
   }
 
   async function removeItem(it: Item) {
-    if (!window.confirm('Delete this photograph and its image? This cannot be undone.')) return;
+    const confirmed = type === 'courses'
+      ? window.confirm(`Delete the course "${String(it.name ?? '')}"? This cannot be undone.`)
+      : window.confirm('Delete this photograph and its image? This cannot be undone.');
+    if (!confirmed) return;
+    setDeletingId(it.id);
     try {
       await request(`/${type}/${it.id}`, { method: 'DELETE' });
-      setNotice('Deleted. The image was removed as well.');
+      setNotice(type === 'courses'
+        ? `Deleted course "${String(it.name ?? '')}".`
+        : 'Deleted. The image was removed as well.');
       await load();
     } catch (err) {
       setNotice(err instanceof Error ? err.message : 'Could not delete. Please try again.');
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -154,6 +163,16 @@ export default function ContentPage() {
                     <td data-label="Actions">
                       <div className="row" style={{ marginTop: 0 }}>
                         <button className="btn btn-g" type="button" onClick={() => startEdit(it)}>Edit</button>
+                        {type === 'courses' && role === 'owner' && (
+                          <button
+                            className="btn btn-g"
+                            type="button"
+                            disabled={deletingId === it.id}
+                            onClick={() => void removeItem(it)}
+                          >
+                            {deletingId === it.id ? 'Deleting…' : 'Delete'}
+                          </button>
+                        )}
                         {type === 'gallery' && role === 'owner' && (
                           <button className="btn btn-g" type="button" onClick={() => void removeItem(it)}>Delete with image</button>
                         )}
@@ -177,7 +196,7 @@ export default function ContentPage() {
                 def={f}
                 value={draft[f.key]}
                 error={fieldErrors[f.key]}
-                disabled={f.key === 'photoPermission' && role !== 'owner'}
+                disabled={(f.key === 'photoPermission' || f.key === 'permissionConfirmed' || f.key === 'consentStatus') && role !== 'owner'}
                 onChange={(v) => setDraft((d) => ({ ...d, [f.key]: v }))}
               />
             ))}

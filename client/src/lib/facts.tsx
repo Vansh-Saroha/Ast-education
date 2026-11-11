@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import snapshot from '../seo/verified-facts.json';
 import { publicGet } from './publicApi';
-import { resolveFacts, type ApiResult, type FactsState } from './dataState';
+import { resolveFacts, type ApiResult, type FactsState, type PublicFact } from './dataState';
 
 const SNAP = snapshot as Record<string, unknown> & { snapshotDate: string };
 const snapshotFacts: Record<string, string> = Object.fromEntries(
@@ -19,9 +19,9 @@ export function FactsProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<FactsState>(INITIAL);
 
   useEffect(() => {
-    publicGet<{ items: Array<{ key: string; value: string }> }>('/facts')
-      .then((r): ApiResult<Array<{ key: string; value: string }>> => ({ ok: true, items: r.items }))
-      .catch((): ApiResult<Array<{ key: string; value: string }>> => ({ ok: false }))
+    publicGet<{ items: PublicFact[] }>('/facts')
+      .then((r): ApiResult<PublicFact[]> => ({ ok: true, items: r.items }))
+      .catch((): ApiResult<PublicFact[]> => ({ ok: false }))
       .then((result) => setState(resolveFacts(result, snapshotFacts, SNAP.snapshotDate)));
   }, []);
 

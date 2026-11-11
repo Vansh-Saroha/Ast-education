@@ -12,6 +12,7 @@ import { adminContentRouter } from './adminContent.js';
 import { mediaRouter } from './media.js';
 import { videoAdminRouter } from './videos.js';
 import { Enquiry, type EnquiryDoc } from '../models/Enquiry.js';
+import { testimonialAdminRouter } from './testimonials.js';
 import {
   ENQUIRY_STATUSES, listQuerySchema, loginSchema, objectIdSchema, updateEnquirySchema,
 } from '../validators/admin.js';
@@ -213,6 +214,7 @@ adminRouter.patch('/enquiries/:id', requireAdmin, async (req, res) => {
 });
 
 // Content management endpoints share the same header guard, no-store headers and sign-in requirement.
+adminRouter.use(testimonialAdminRouter);
 adminRouter.use(adminContentRouter);
 adminRouter.use(videoAdminRouter);
 adminRouter.use(mediaRouter);

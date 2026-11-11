@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { Enquiry } from '../models/Enquiry.js';
 import { enquirySchema } from '../validators/enquiry.js';
 import { enquiryLimiter } from '../middleware/rateLimit.js';
+import { Course } from '../models/Content.js';
+import { COURSE_OPTIONS } from '../config/courses.js';
 
 const RECEIVED = {
   received: true,
@@ -21,6 +23,16 @@ enquiryRouter.post('/', enquiryLimiter, async (req, res) => {
   }
 
   const { website: _honeypot, ...fields } = enquirySchema.parse(body);
+
+  const publishedCourse = fields.course === 'Not sure yet'
+    ? true
+    : COURSE_OPTIONS.includes(fields.course as (typeof COURSE_OPTIONS)[number])
+      ? true
+      : !!await Course.exists({ name: fields.course, status: 'published', verification: 'verified' });
+  if (!publishedCourse) {
+    res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'Please choose a published course.', fields: { course: ['Choose a currently published course.'] } } });
+    return;
+  }
 
   // Same mobile and course within 10 minutes: treat as a double submit and do not store a second copy.
   const duplicate = await Enquiry.exists({

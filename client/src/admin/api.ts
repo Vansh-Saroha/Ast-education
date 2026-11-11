@@ -27,6 +27,8 @@ export interface Enquiry {
 export type VideoCategory = 'centre-tour' | 'student-feedback' | 'parent-feedback' | 'course-demonstration' | 'events-activities' | 'promotional' | 'achievements' | 'other';
 export type VideoStatus = 'draft' | 'published' | 'archived';
 export interface AdminVideo { id: string; youtubeUrl: string; youtubeId: string; title: string; description: string; category: VideoCategory; status: VideoStatus; isFeatured: boolean; displayOrder: number; consentStatus: 'pending' | 'confirmed' | 'withdrawn'; consentEvidence: string; isMinor: boolean; guardianConsentConfirmed: boolean; embedUrl: string; thumbnailUrl: string; }
+export type TestimonialStatus = 'pending' | 'approved' | 'rejected';
+export interface AdminTestimonial { id: string; studentName: string; courseName: string; rating: number; review: string; photoAssetId: string | null; status: TestimonialStatus; consent: boolean; createdAt: string; updatedAt: string; }
 
 export interface Admin {
   id: string;
@@ -76,6 +78,11 @@ export const adminApi = {
   createVideo: (data: Omit<AdminVideo, 'id' | 'youtubeId' | 'embedUrl' | 'thumbnailUrl'>) => request<{ item: AdminVideo }>('/videos', { method: 'POST', body: JSON.stringify(data) }),
   updateVideo: (id: string, data: Partial<Omit<AdminVideo, 'id' | 'youtubeId' | 'embedUrl' | 'thumbnailUrl'>>) => request<{ item: AdminVideo }>(`/videos/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
   deleteVideo: (id: string) => request<void>(`/videos/${id}`, { method: 'DELETE' }),
+  testimonials: (status = '') => request<{ items: AdminTestimonial[] }>(`/testimonials${status ? `?status=${status}` : ''}`),
+  testimonialStats: () => request<{ total: number; counts: Record<TestimonialStatus, number> }>('/testimonials/stats'),
+  updateTestimonial: (id: string, data: Partial<Pick<AdminTestimonial, 'studentName' | 'courseName' | 'rating' | 'review' | 'status' | 'consent' | 'photoAssetId'>>) =>
+    request<{ item: AdminTestimonial }>(`/testimonials/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  deleteTestimonial: (id: string) => request<void>(`/testimonials/${id}`, { method: 'DELETE' }),
 };
 
 const formatter = new Intl.DateTimeFormat('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Kolkata' });

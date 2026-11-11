@@ -47,7 +47,7 @@ export default function CertificationsPage() {
             <button className="btn btn-g" type="button" aria-pressed={zoomed} onClick={() => setZoomed((z) => !z)}>{zoomed ? 'Zoom out' : 'Zoom in'}</button>
           </p>
           <div className={`lb ${zoomed ? 'zoomed' : ''}`}>
-            <img src="/assets/iso.webp" alt="ISO 9001:2015 certificate issued to SUMAN EDUCATIONAL TRUST" />
+            <img src="/assets/iso.webp" alt="ISO 9001:2015 certificate issued to SUMAN EDUCATIONAL TRUST" loading="lazy" />
           </div>
         </div>
       </dialog>

@@ -32,9 +32,11 @@ const leadershipFields = {
   biography: text(4000).optional(),
   responsibilities: text(2000).optional(),
   skills: text(2000).optional(),
+  teachingManagement: text(2000).optional(),
   achievements: text(2000).optional(),
   visionMission: text(2000).optional(),
   studentMessage: text(2000).optional(),
+  quote: text(1000).optional(),
   portraitAssetId: mediaId.nullable().optional(),
   photoPermission: z.enum(PHOTO_PERMISSIONS).optional(),
 };
@@ -69,11 +71,26 @@ export const contentSchemas = {
 
 export const updateFactSchema = z
   .object({
+    label: requiredText(80, 2).optional(),
     value: text(300).optional(),
     note: text(500).optional(),
+    publicVisibility: z.boolean().optional(),
+    proofAssetId: mediaId.nullable().optional(),
     verification: z.enum(VERIFICATION_STATUSES).optional(),
     verificationSource: z.enum(['owner-confirmed', 'document-checked']).optional(),
   })
   .strict();
 
-export const factKeySchema = z.string().regex(/^[a-zA-Z]{2,40}$/, 'Invalid fact key');
+export const createFactSchema = z
+  .object({
+    key: z.string().regex(/^[a-z][a-zA-Z0-9]{1,39}$/, 'Use a fact key starting with a lowercase letter, with letters or numbers only'),
+    label: requiredText(80, 2),
+    value: requiredText(300, 1),
+    note: text(500).optional(),
+    publicVisibility: z.boolean().default(true),
+    verificationType: z.enum(['owner-confirmed', 'independently-verified']).optional(),
+    proofAssetId: mediaId.nullable().optional(),
+  })
+  .strict();
+
+export const factKeySchema = z.string().regex(/^[a-z][a-zA-Z0-9]{1,39}$/, 'Invalid fact key');

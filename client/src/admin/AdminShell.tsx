@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { adminApi, type Admin } from './api';
 import '../styles/admin.css';
+import '../styles/clay-admin.css';
 
 export default function AdminShell() {
   // undefined = checking, null = signed out, Admin = signed in
@@ -25,7 +26,7 @@ export default function AdminShell() {
     try {
       await adminApi.logout();
     } finally {
-      navigate('/admin/login', { replace: true });
+      navigate('/owner/login', { replace: true });
     }
   }
 
@@ -33,7 +34,7 @@ export default function AdminShell() {
     return <p className="admin-status" role="status">Checking your session…</p>;
   }
   if (admin === null) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/owner/login" replace />;
   }
 
   return (
@@ -51,7 +52,7 @@ export default function AdminShell() {
           <NavLink to="/admin/content/courses">Courses</NavLink>
           <NavLink to="/admin/content/leadership">Leadership</NavLink>
           <NavLink to="/admin/content/gallery">Gallery</NavLink>
-          <NavLink to="/admin/content/testimonials">Testimonials</NavLink>
+          {admin.role === 'owner' && <NavLink to="/admin/testimonials">Manage Testimonials</NavLink>}
           <NavLink to="/admin/facts">Business facts</NavLink>
           <NavLink to="/admin/videos">Videos</NavLink>
         </nav>

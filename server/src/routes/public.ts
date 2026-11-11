@@ -44,7 +44,7 @@ publicRouter.get('/courses', async (_req, res) => {
 publicRouter.get('/leadership', async (_req, res) => {
   const rows = await LeadershipProfile.find(publicFilters.leadership())
     .sort({ displayOrder: 1 })
-    .select('profileType designation name qualifications experience biography responsibilities skills achievements visionMission studentMessage portraitAssetId photoPermission status verification')
+    .select('profileType designation name qualifications experience biography responsibilities skills teachingManagement achievements visionMission studentMessage quote portraitAssetId photoPermission status verification')
     .populate({ path: 'portraitAssetId', select: 'width height variants' })
     .lean();
   // Internal fields never leave the server. A portrait is returned only when its permission is confirmed.
@@ -58,9 +58,11 @@ publicRouter.get('/leadership', async (_req, res) => {
       biography: r.biography,
       responsibilities: r.responsibilities,
       skills: r.skills,
+      teachingManagement: r.teachingManagement,
       achievements: r.achievements,
       visionMission: r.visionMission,
       studentMessage: r.studentMessage,
+      quote: r.quote,
       photo: isPortraitPublic(r) ? imageFor(r.portraitAssetId as unknown as Sized) : null,
     })),
   });
@@ -88,8 +90,8 @@ publicRouter.get('/testimonials', async (_req, res) => {
 });
 
 publicRouter.get('/facts', async (_req, res) => {
-  const rows = await BusinessFact.find(publicFilters.facts()).select('key label value verificationSource').lean();
-  res.json({ items: rows.map((r) => ({ key: r.key, label: r.label, value: r.value, source: r.verificationSource })) });
+  const rows = await BusinessFact.find(publicFilters.facts()).select('key label value verificationSource custom').lean();
+  res.json({ items: rows.map((r) => ({ key: r.key, label: r.label, value: r.value, source: r.verificationSource, custom: Boolean(r.custom) })) });
 });
 
 // Public image delivery. Only images used by a publicly visible record are served.

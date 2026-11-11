@@ -14,7 +14,7 @@ const videoSchema = new Schema({
   description: { type: String, trim: true, maxlength: 1000, default: '' },
   category: { type: String, enum: VIDEO_CATEGORIES, required: true },
   status: { type: String, enum: VIDEO_STATUSES, default: 'draft', index: true },
-  isFeatured: { type: Boolean, default: false, index: true },
+  isFeatured: { type: Boolean, default: false },
   displayOrder: { type: Number, min: 0, max: 9999, default: 0 },
   consentStatus: { type: String, enum: VIDEO_CONSENT, default: 'pending', index: true },
   consentEvidence: { type: String, trim: true, maxlength: 300, default: '' },
