@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ApiError, request, formatDate } from './api';
 import { CONTENT_TYPES, COMMON_FIELDS, type FieldDef } from './contentConfig';
@@ -22,6 +22,7 @@ export default function ContentPage() {
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState('');
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const editorRef = useRef<HTMLElement>(null);
 
   async function load() {
     try {
@@ -38,6 +39,17 @@ export default function ContentPage() {
     setEditing(null);
     if (def) void load();
   }, [type]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!editing) return;
+    const editor = editorRef.current;
+    if (!editor) return;
+    editor.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    editor.querySelector<HTMLElement>('input:not([type="checkbox"]), select, textarea')?.focus({ preventScroll: true });
+  }, [editing]);
 
   if (!def) return <div className="admin-page"><h1>Unknown content type</h1><Link to="/admin">Back to enquiries</Link></div>;
 
@@ -59,9 +71,28 @@ export default function ContentPage() {
   async function save(e: FormEvent) {
     e.preventDefault();
     if (saving || !editing) return;
+    setNotice('');
+    const errors: Record<string, string> = {};
+    for (const f of allFields) {
+      const value = draft[f.key];
+      const empty = value == null || (typeof value === 'string' && !value.trim());
+      if (f.required && empty) {
+        errors[f.key] = `${f.label} is required.`;
+      } else if (f.kind === 'number' && !empty) {
+        const number = Number(value);
+        if (!Number.isInteger(number)) errors[f.key] = 'Enter a whole number.';
+        else if (f.min !== undefined && number < f.min) errors[f.key] = `Enter at least ${f.min}.`;
+        else if (f.max !== undefined && number > f.max) errors[f.key] = `Enter no more than ${f.max}.`;
+      }
+    }
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setNotice('Please correct the highlighted fields before saving.');
+      return;
+    }
+
     setSaving(true);
     setFieldErrors({});
-    setNotice('');
     const body: Record<string, unknown> = {};
     for (const f of allFields) {
       const v = draft[f.key];
@@ -187,7 +218,7 @@ export default function ContentPage() {
       )}
 
       {editing && (
-        <section className="admin-card" aria-labelledby="editor-title">
+        <section ref={editorRef} className="admin-card" aria-labelledby="editor-title">
           <h2 id="editor-title">{editing === 'new' ? `New ${def.singular}` : `Edit ${def.singular}`}</h2>
           <form onSubmit={save} noValidate className="editor">
             {allFields.map((f) => (
@@ -229,15 +260,18 @@ function FieldInput({ def, value, error, onChange, disabled }: { def: FieldDef; 
 
   if (def.kind === 'image') {
     return (
-      <ImageUploader
-        purpose={def.purpose ?? 'gallery'}
-        label={def.label}
-        value={value ? String(value) : null}
-        nullable={!def.required}
-        disabled={disabled}
-        hint={def.hint}
-        onChange={(assetId) => onChange(assetId ?? '')}
-      />
+      <div>
+        <ImageUploader
+          purpose={def.purpose ?? 'gallery'}
+          label={def.label}
+          value={value ? String(value) : null}
+          nullable={!def.required}
+          disabled={disabled}
+          hint={def.hint}
+          onChange={(assetId) => onChange(assetId ?? '')}
+        />
+        {error && <p className="err" role="alert">{error}</p>}
+      </div>
     );
   }
 

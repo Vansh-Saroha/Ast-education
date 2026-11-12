@@ -110,10 +110,22 @@
 .admin-login-card { width: min(440px, 100%); padding: 34px; box-shadow: 0 30px 70px rgba(16, 43, 102, .18), inset 4px 4px 10px rgba(255, 255, 255, .9); }
 .admin-login-card h1 { color: var(--clay-deep); }
 
-@media (max-width: 900px) {
-  .admin-side { top: 0; height: auto; margin: 10px; padding: 14px 16px; border-radius: 26px; }
-}
 @media (max-width: 720px) {
   .fact-modal { border-radius: 30px 30px 0 0; }
   .enq-table tr { border-radius: 22px; }
+  .admin .admin-main { padding: 16px 14px 28px; }
+  .admin .admin-card { padding: 16px; }
+  .admin .stat { padding: 12px; }
+  .admin .stat.is-active { padding: 11px; }
+  .admin .fact-modal-head, .admin .fact-modal-actions { background: #FFFEFA; }
+}
+@media (max-width: 900px) {
+  .admin .admin-side { top: auto; height: auto; margin: 10px 10px 0; padding: 12px 14px; border-radius: 24px; }
+}
+@media (max-width: 360px) {
+  .admin .admin-side { margin: 8px 8px 0; padding: 10px 12px; }
+  .admin .admin-main { padding: 14px 10px 24px; }
+  .admin .admin-card { padding: 13px; }
+  .admin .stat { padding: 10px; }
+  .admin .stat.is-active { padding: 9px; }
 }
