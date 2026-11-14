@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "tsc --noEmit",
-    "test": "tsx test/dataState.test.ts && tsx test/render.test.tsx && tsx test/upload.test.ts",
+    "test": "tsx test/dataState.test.ts && tsx test/admin-api.test.ts && tsx test/render.test.tsx && tsx test/upload.test.ts",
     "build": "tsc --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "generate:approved": "node scripts/generate-approved.mjs"

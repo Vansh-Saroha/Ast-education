@@ -107,12 +107,13 @@ For a staff account, use `-Role staff` in PowerShell or `ADMIN_ROLE=staff` on ma
 
 - Passwords are hashed with bcrypt (cost 12). Hashes are never returned by the API.
 - Sign-in creates a 32-byte random token, sent in an HTTP-only, SameSite=Strict cookie (Secure in production). Only its SHA-256 hash is stored. Sessions last 8 hours, and MongoDB deletes them automatically.
+- Admin API calls include cookies. Credentialed CORS responses are limited to the exact origins in `CLIENT_ORIGINS`; the session cookie is host-only, has `Path=/`, and is not exposed to JavaScript.
 - Sign-in is rate limited to 5 failed attempts per 15 minutes per IP. An account locks for 15 minutes after 10 consecutive failures. Every failure returns the same message, and unknown emails take the same time to check.
 - State-changing admin requests must carry the `X-Admin-Request` header. Cross-site pages cannot add it without a preflight, which the origin allowlist refuses.
 - Admin responses send `Cache-Control: no-store`. Every input is validated on the server with strict schemas, search text is regex-escaped, and date filters use India Standard Time.
 - Logs record the action and admin ID only, never names, emails, phone numbers or message text.
 
-**Deployment requirement:** the admin site and the API must be on the same site (subdomains are fine, for example `www.example.com` and `api.example.com`), or the API must be proxied under `/api` on the same origin. Because cookies are SameSite=Strict, a cross-site deployment will not sign in.
+**Deployment requirement:** the frontend currently calls relative `/api` URLs, so production must route `/api` on the website origin to Express (typically with a reverse proxy) and set that exact website origin in `CLIENT_ORIGINS`. The session cookie is host-only; directly separating the API onto another hostname requires a matching frontend API URL configuration. Because cookies are SameSite=Strict, a cross-site deployment will not sign in.
 
 **Migration:** if Phase 1 test data contains the retired status `closed`, run `db.enquiries.updateMany({ status: 'closed' }, { $set: { status: 'rejected' } })` in the MongoDB shell first.
 

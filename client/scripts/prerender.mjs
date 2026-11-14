@@ -128,7 +128,7 @@ for (const route of routes) {
     .replace(/<title>[\s\S]*?<\/title>/, () => '')
     .replace(/<meta name="description"[^>]*>/, () => '')
     .replace('</head>', () => `    ${pageStyles(route.path)}\n    ${headTags(route)}\n  </head>`)
-    .replace(ROOT_MARKER, () => `<div id="root">${body}</div>`);
+    .replace(ROOT_MARKER, () => `<div id="root" data-prerendered-path="${esc(route.path)}">${body}</div>`);
   const target = targetFor(route.path);
   mkdirSync(dirname(target), { recursive: true });
   writeFileSync(target, html, 'utf8');

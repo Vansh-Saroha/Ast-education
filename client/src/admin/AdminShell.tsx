@@ -20,7 +20,15 @@ export default function AdminShell() {
       document.head.appendChild(meta);
     }
     meta.content = 'noindex, nofollow';
-    adminApi.me().then((r) => setAdmin(r.admin)).catch(() => setAdmin(null));
+    let active = true;
+    adminApi.me().then((r) => {
+      if (active) setAdmin(r.admin);
+    }).catch(() => {
+      if (active) setAdmin(null);
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {

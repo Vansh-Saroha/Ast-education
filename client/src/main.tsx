@@ -52,7 +52,8 @@ void loadInitialPage(window.location.pathname).then((pageComponents) => {
     </React.StrictMode>
   );
 
-  if (root.hasChildNodes()) {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  if (root.hasChildNodes() && root.dataset.prerenderedPath === path) {
     ReactDOM.hydrateRoot(root, tree);
   } else {
     ReactDOM.createRoot(root).render(tree);

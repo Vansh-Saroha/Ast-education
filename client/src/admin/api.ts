@@ -47,13 +47,41 @@ export class ApiError extends Error {
   }
 }
 
+let authRevision = 0;
+let currentAdminRequest: { revision: number; promise: Promise<{ admin: Admin }> } | undefined;
+
+function invalidateAdminRequest(): void {
+  authRevision += 1;
+  currentAdminRequest = undefined;
+}
+
+function getCurrentAdmin(): Promise<{ admin: Admin }> {
+  const revision = authRevision;
+  if (!currentAdminRequest || currentAdminRequest.revision !== revision) {
+    const promise = request<{ admin: Admin }>('/auth/me');
+    currentAdminRequest = { revision, promise };
+    void promise.finally(() => {
+      if (currentAdminRequest?.promise === promise) currentAdminRequest = undefined;
+    }).catch(() => undefined);
+  }
+
+  const pending = currentAdminRequest.promise;
+  return pending.then(
+    (result) => revision === authRevision ? result : getCurrentAdmin(),
+    (error: unknown) => {
+      if (revision !== authRevision) return getCurrentAdmin();
+      throw error;
+    },
+  );
+}
+
 export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json' };
   if (init.body) headers['Content-Type'] = 'application/json';
   // Browsers send this only same-origin; cross-site pages cannot add it without a preflight we refuse.
   if (init.method && init.method !== 'GET') headers['X-Admin-Request'] = '1';
 
-  const res = await fetch(`/api/admin${path}`, { ...init, headers, credentials: 'same-origin' });
+  const res = await fetch(`/api/admin${path}`, { ...init, headers, credentials: 'include' });
   if (res.status === 204) return undefined as T;
 
   const body = await res.json().catch(() => null);
@@ -64,10 +92,16 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
 }
 
 export const adminApi = {
-  me: () => request<{ admin: Admin }>('/auth/me'),
-  login: (email: string, password: string) =>
-    request<{ admin: Admin }>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
-  logout: () => request<void>('/auth/logout', { method: 'POST' }),
+  me: getCurrentAdmin,
+  login: async (email: string, password: string) => {
+    const result = await request<{ admin: Admin }>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+    invalidateAdminRequest();
+    return result;
+  },
+  logout: async () => {
+    await request<void>('/auth/logout', { method: 'POST' });
+    invalidateAdminRequest();
+  },
   stats: () => request<{ total: number; counts: Record<EnquiryStatus, number> }>('/enquiries/stats'),
   list: (params: URLSearchParams) =>
     request<{ items: Enquiry[]; page: number; limit: number; total: number; pages: number }>(`/enquiries?${params}`),

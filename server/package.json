@@ -11,7 +11,7 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
-    "test": "tsx test/enquiry.test.ts && tsx test/admin.test.ts && tsx test/content.test.ts && tsx test/publication.test.ts && tsx test/media.test.ts && tsx test/widths.test.ts && tsx test/cors.test.ts && tsx test/authz.test.ts && tsx test/flow.test.ts && tsx test/videos.test.ts",
+    "test": "tsx test/enquiry.test.ts && tsx test/admin.test.ts && tsx test/auth-flow.test.ts && tsx test/content.test.ts && tsx test/publication.test.ts && tsx test/media.test.ts && tsx test/widths.test.ts && tsx test/cors.test.ts && tsx test/authz.test.ts && tsx test/flow.test.ts && tsx test/videos.test.ts",
     "admin:create": "tsx src/scripts/createAdmin.ts",
     "seed:content": "tsx src/scripts/seedContent.ts",
     "media:cleanup": "tsx src/scripts/cleanupMedia.ts"

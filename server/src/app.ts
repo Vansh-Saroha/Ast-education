@@ -21,6 +21,7 @@ export function createApp() {
     cors({
       // Only the configured frontend origins may call the API from a browser.
       origin: (origin, callback) => callback(null, !origin || env.clientOrigins.includes(origin)),
+      credentials: true,
       methods: ['GET', 'POST', 'PATCH', 'DELETE'],
       // Only the headers the application sends. X-Admin-Request is still required server-side for every admin write.
       allowedHeaders: ['Content-Type', 'X-Admin-Request', 'X-Filename'],

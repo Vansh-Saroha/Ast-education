@@ -26,6 +26,7 @@ export function ImageUploader({ purpose, label, value, nullable, disabled, hint,
     apply({ type: 'start' });
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/api/admin/media?purpose=${purpose}`);
+    xhr.withCredentials = true;
     xhr.setRequestHeader('Content-Type', file.type);
     xhr.setRequestHeader('X-Admin-Request', '1');
     xhr.setRequestHeader('X-Filename', encodeURIComponent(file.name));

@@ -34,6 +34,7 @@ try {
   const ok = await preflight(ALLOWED);
   assert.equal(ok.status, 204, 'preflight succeeds');
   assert.equal(ok.headers['access-control-allow-origin'], ALLOWED, 'allowed origin is echoed');
+  assert.equal(ok.headers['access-control-allow-credentials'], 'true', 'allowed origins may send session cookies');
   assert.match(String(ok.headers['access-control-allow-methods']), /\bPATCH\b/, 'PATCH is an allowed method');
   assert.match(String(ok.headers['access-control-allow-methods']), /\bGET\b/, 'existing methods are kept');
   assert.match(String(ok.headers['access-control-allow-methods']), /\bPOST\b/, 'existing methods are kept');
